@@ -1,0 +1,98 @@
+.wrapper {
+    display: flex !important;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    background-color: var(--white);
+    border: 1px solid transparent;
+    -webkit-user-select: none;
+    user-select: none;
+    color: #ffffffc9;
+
+    // + .wrapper {
+    //     margin-left: 8px;
+    // }
+
+    &.disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    .title {
+        padding: 0 !important;
+
+        &:hover {
+            background-color: transparent;
+        }
+    }
+}
+
+.title {
+    width: 100%;
+}
+
+.icon + .title,
+.title + .icon {
+    margin-left: 8px;
+}
+
+.icon {
+    display: block;
+    width: 20px;
+    text-align: center;
+    color: #f9ceac;
+    float: right;
+}
+
+// Button types
+.rounded {
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+    border-color: rgba(22, 24, 35, 0.12);
+
+    &:hover {
+        border-color: rgba(22, 24, 35, 0.2);
+        background-color: rgba(22, 24, 35, 0.03);
+    }
+}
+
+.primary {
+    color: var(--white);
+    background-color: var(--primary);
+    border-color: var(--primary);
+    border-color: var(--primary);
+
+    &:hover {
+        border-color: var(--primary);
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), #fe2c55;
+    }
+}
+
+.outline {
+    color: var(--primary);
+    border-color: currentColor;
+
+    &:hover {
+        border-color: currentColor;
+        background-color: rgba(254, 44, 85, 0.06);
+    }
+}
+
+.text {
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+// Button size
+.small {
+    min-width: 88px;
+    padding: 4px 16px;
+}
+
+.large {
+    padding: 14px 16px;
+    min-width: 140px;
+}

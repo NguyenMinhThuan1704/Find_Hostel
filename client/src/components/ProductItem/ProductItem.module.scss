@@ -1,0 +1,41 @@
+.prominent__item--container {
+    @apply px-4 mb-4;
+
+    &:first-child {
+        @apply md:pl-0;
+    }
+
+    &:last-child {
+        @apply md:pr-0;
+    }
+}
+
+.prominent__item {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+
+    .prominent__item--img {
+        height: 300px;
+        width: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+        overflow: hidden;
+        background-color: transparent;
+    }
+
+    .prominent__item--title {
+        line-height: 2.6rem;
+        display: grid;
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    &:hover {
+        box-shadow: 0 0 26px 0 rgb(0 0 0 / 15%);
+    }
+
+    &:hover .prominent__item--img {
+        transform: scale(1.1);
+    }
+}
