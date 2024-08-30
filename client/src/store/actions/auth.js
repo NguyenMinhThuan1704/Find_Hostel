@@ -54,3 +54,7 @@ export const login = (payload) => async (dispatch) => {
         return false;
     }
 };
+
+export const logout = () => ({
+    type: actionTypes.LOGOUT,
+});

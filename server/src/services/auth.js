@@ -1,6 +1,7 @@
 import db from "../models";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { v4 } from "uuid";
 require("dotenv").config();
 
 const hashPassword = (password) =>
@@ -9,13 +10,18 @@ const hashPassword = (password) =>
 export const registerService = (body) =>
   new Promise(async (resolve, reject) => {
     try {
+      let userId = v4();
       const response = await db.User.findOrCreate({
         where: { phone: body.phone },
         defaults: {
+          id: userId,
           name: body.name,
           phone: body.phone,
           password: hashPassword(body.password),
+          zalo: body.zalo || "",
           email: body.email,
+          fbUrl: body.fbUrl || "",
+          avatar: body.avatar || null,
           roleId: body.roleId,
         },
       });

@@ -1,12 +1,31 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import Image from 'components/Image';
 import img from 'assets/img';
+import { apiGetAllCategories } from 'services/categories';
+import classNames from 'classnames/bind';
+import styles from './Navbar.module.scss';
+import { formatVietnameseToString } from 'utils/constant';
+
+const cx = classNames.bind(styles);
 
 const Navbar = () => {
-    const [activeItem, setActiveItem] = useState('');
+    const [categories, SetCategories] = useState([]);
+    const [activeItem, setActiveItem] = useState('home');
     const [isOpen, setIsOpen] = useState(false);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const response = await apiGetAllCategories();
+            if (response?.data.err === 0) {
+                SetCategories(response.data.response);
+            }
+        };
+        fetchCategories();
+    }, []);
+
+    console.log(categories);
 
     const menuPcItems = [
         'Trang chủ',
@@ -30,19 +49,36 @@ const Navbar = () => {
     };
 
     return (
-        <div className="relative bg-slate-500 sm:bg-blue-600 flex justify-between px-[82px]">
+        <div className="relative bg-slate-500 sm:bg-blue-600 flex justify-between px-8 sm:px-[82px]">
             {/* PC Navbar */}
             <div className="hidden sm:flex flex-1 justify-between">
-                {menuPcItems.map((item) => (
-                    <Link
-                        key={item}
-                        onClick={() => setActiveItem(item)}
-                        className={`flex-1 text-center px-3.5 py-3.5 cursor-pointer text-white ${
-                            activeItem === item ? 'bg-[#f73859]' : 'hover:bg-[#f73859]'
-                        }`}
+                <NavLink
+                    to="/"
+                    onClick={() => setActiveItem('home')}
+                    className={(nav) =>
+                        cx('flex-1 text-center px-3.5 py-3.5 cursor-pointer text-white', {
+                            'bg-[#f73859]': activeItem === 'home',
+                            'hover:bg-[#f73859]': activeItem !== 'home',
+                        })
+                    }
+                >
+                    Trang chủ
+                </NavLink>
+                {categories.map((item) => (
+                    <NavLink
+                        key={item.id}
+                        to={`/${formatVietnameseToString(item.value)}`}
+                        // to="/"
+                        onClick={() => setActiveItem(item.code)}
+                        className={(nav) =>
+                            cx('flex-1 text-center px-3.5 py-3.5 cursor-pointer text-white', {
+                                'bg-[#f73859]': activeItem === item.code,
+                                'hover:bg-[#f73859]': activeItem !== item.code,
+                            })
+                        }
                     >
-                        {item}
-                    </Link>
+                        {item.value}
+                    </NavLink>
                 ))}
             </div>
 
@@ -80,7 +116,7 @@ const Navbar = () => {
                             key={item}
                             onClick={() => {
                                 setActiveItem(item);
-                                closeMenu(); // Close the menu after selection
+                                closeMenu();
                             }}
                             className={`px-6 py-4 text-white text-xl ${
                                 activeItem === item ? 'bg-[#f73859]' : 'hover:bg-[#f73859]'

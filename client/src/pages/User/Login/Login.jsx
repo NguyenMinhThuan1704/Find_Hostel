@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import config from 'config';
 import * as actions from 'store/actions';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
 const validationSchema = Yup.object({
@@ -17,6 +17,7 @@ const validationSchema = Yup.object({
 function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { msg, update, isSuccess } = useSelector((state) => state.auth);
 
     const handleSubmit = async (values, { setSubmitting }) => {
         const payload = {
@@ -24,18 +25,25 @@ function Login() {
             password: values.password,
         };
 
-        const isSuccess = await dispatch(actions.login(payload));
-        if (isSuccess) {
-            toast.success('Đăng nhập thành công!');
-            setTimeout(() => {
-                navigate(config.routes.home);
-            }, 2000);
-        } else {
-            toast.error('Đăng nhập thất bại!');
-        }
+        await dispatch(actions.login(payload));
 
         setSubmitting(false);
     };
+
+    useEffect(() => {
+        if (msg) {
+            if (isSuccess) {
+                toast.success('Đăng nhập thành công');
+                setTimeout(() => {
+                    navigate(config.routes.home);
+                }, 2000);
+            } else {
+                toast.error(`Đăng nhập thất bại: ${msg}`);
+            }
+        }
+    }, [msg, update, isSuccess, navigate]);
+
+    console.log(msg, isSuccess);
 
     return (
         <div className="flex justify-center items-center bg-gray-100 p-[30px] ">
