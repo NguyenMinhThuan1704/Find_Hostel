@@ -7,6 +7,7 @@ import Navbar from 'layouts/components/User/Navbar';
 import Contact from 'layouts/components/User/Contact';
 import Support from 'layouts/components/User/Support';
 import Footer from 'layouts/components/User/Footer';
+import Search from 'layouts/components/User/Search';
 
 const cx = classNames.bind(styles);
 
@@ -15,8 +16,9 @@ function DefaultLayout({ children }) {
         <div className={cx('wrapper', 'bg-[#f5f5f5]')}>
             <Header />
             <Navbar />
+            <Search />
             <div className={cx('container')}>
-                <div className={cx('content')}>{children}</div>
+                <div className={cx('content', 'sm:mx-[100px]')}>{children}</div>
             </div>
             <Contact />
             <Support />

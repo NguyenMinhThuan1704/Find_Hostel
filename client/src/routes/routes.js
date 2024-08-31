@@ -1,5 +1,4 @@
 import config from 'config';
-import { path } from 'utils/constant';
 
 // Layout
 // import { NoSlide, AdminLayout } from 'layouts';
@@ -21,15 +20,10 @@ const publicRoutes = [
     { path: config.routes.register, component: Register },
     { path: config.routes.forgotPassword, component: ForgotPassword },
 
-    { path: path.CHO_THUE_CAN_HO, component: RentalApartment },
-    { path: path.CHO_THUE_PHONG_TRO, component: RentalRooms },
-    { path: path.NHA_CHO_THUE, component: RentalHouse },
-    { path: path.CHO_THUE_MAT_BANG, component: RentalSpace },
-
-    // { path: config.routes.rentalApartment, component: RentalApartment },
-    // { path: config.routes.rentalRoom, component: RentalRoom },
-    // { path: config.routes.rentalHouse, component: RentalHouse },
-    // { path: config.routes.rentalSpace, component: RentalSpace },
+    { path: config.routes.rentalApartment, component: RentalApartment },
+    { path: config.routes.rentalRoom, component: RentalRooms },
+    { path: config.routes.rentalHouse, component: RentalHouse },
+    { path: config.routes.rentalSpace, component: RentalSpace },
 
     // { path: config.routes.trademark, component: Trademark, layout: NoSlide },
     // { path: config.routes.detailproduct, component: DetailProduct, layout: NoSlide },

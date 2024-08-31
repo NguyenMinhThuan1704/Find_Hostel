@@ -6,13 +6,13 @@ import img from 'assets/img';
 import { apiGetAllCategories } from 'services/categories';
 import classNames from 'classnames/bind';
 import styles from './Navbar.module.scss';
-import { formatVietnameseToString } from 'utils/constant';
+import { formatVietnameseToString } from 'utils/Common/formatVietnameseToString';
 
 const cx = classNames.bind(styles);
 
 const Navbar = () => {
     const [categories, SetCategories] = useState([]);
-    const [activeItem, setActiveItem] = useState('home');
+    const [activeItem, setActiveItem] = useState('TC');
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
@@ -25,20 +25,20 @@ const Navbar = () => {
         fetchCategories();
     }, []);
 
-    console.log(categories);
-
     const menuPcItems = [
-        'Trang chủ',
-        'Cho thuê phòng trọ',
-        'Nhà cho thuê',
-        'Cho thuê căn hộ',
-        'Cho thuê Mặt bằng',
-        'Tìm người ở ghép',
-        'Tin tức',
-        'Bảng giá dịch vụ',
+        { title: 'Trang chủ', path: '/', code: 'TC' },
+        ...categories.map((item) => ({
+            id: item.id,
+            title: item.value,
+            path: `/${formatVietnameseToString(item.value)}`,
+            code: item.code,
+        })),
+        { title: 'Tìm người ở ghép', path: '/tim-nguoi-o-ghep', code: 'TNOG' },
+        { title: 'Tin tức', path: '/tin-tuc', code: 'TT' },
+        { title: 'Bảng giá dịch vụ', path: '/bang-gia-dich-vu', code: 'BGDV' },
     ];
 
-    const menumbItems = [...menuPcItems, 'Yêu thích', 'Đăng tin miễm phí', 'Đăng nhập'];
+    const menumbItems = [...menuPcItems.map((item) => item.title), 'Yêu thích', 'Đăng tin miễm phí', 'Đăng nhập'];
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -51,8 +51,11 @@ const Navbar = () => {
     return (
         <div className="relative bg-slate-500 sm:bg-blue-600 flex justify-between px-8 sm:px-[82px]">
             {/* PC Navbar */}
-            <div className="hidden sm:flex flex-1 justify-between">
-                <NavLink
+            <div
+                className="hidden sm:grid gap-4 flex-1 justify-between"
+                style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: 0 }}
+            >
+                {/* <NavLink
                     to="/"
                     onClick={() => setActiveItem('home')}
                     className={(nav) =>
@@ -63,11 +66,11 @@ const Navbar = () => {
                     }
                 >
                     Trang chủ
-                </NavLink>
-                {categories.map((item) => (
+                </NavLink> */}
+                {menuPcItems.map((item) => (
                     <NavLink
-                        key={item.id}
-                        to={`/${formatVietnameseToString(item.value)}`}
+                        key={item.code}
+                        to={item.path}
                         // to="/"
                         onClick={() => setActiveItem(item.code)}
                         className={(nav) =>
@@ -77,7 +80,7 @@ const Navbar = () => {
                             })
                         }
                     >
-                        {item.value}
+                        {item.title}
                     </NavLink>
                 ))}
             </div>
