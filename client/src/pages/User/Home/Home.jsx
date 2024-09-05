@@ -1,5 +1,7 @@
 import React from 'react';
 import Area from './Area';
+import ListPost from 'components/ListPost';
+import Sidebar from 'components/Sidebar';
 
 function Home() {
     return (
@@ -13,6 +15,15 @@ function Home() {
             </div>
 
             <Area />
+
+            <div className="w-full flex gap-4">
+                <div className="w-2/3">
+                    <ListPost />
+                </div>
+                <div className="w-1/3">
+                    <Sidebar />
+                </div>
+            </div>
         </div>
     );
 }
