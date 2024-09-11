@@ -13,6 +13,10 @@ import {
     faGear,
     faSignOut,
     faUser,
+    faPencil,
+    faClipboardList,
+    faCreditCard,
+    faCommentDollar,
 } from '@fortawesome/free-solid-svg-icons';
 import * as actions from 'store/actions';
 import Button from 'components/Button';
@@ -34,6 +38,31 @@ function Header() {
         {
             icon: <FontAwesomeIcon icon={faUser} />,
             title: 'Quản lý tài khoản',
+            to: `${config.routes.profile}`,
+        },
+        {
+            icon: <FontAwesomeIcon icon={faPencil} />,
+            title: 'Đăng tin cho thuê',
+            to: `${config.routes.profile}`,
+        },
+        {
+            icon: <FontAwesomeIcon icon={faClipboardList} />,
+            title: 'Quản lý đăng tin',
+            to: `${config.routes.profile}`,
+        },
+        {
+            icon: <FontAwesomeIcon icon={faCreditCard} />,
+            title: 'Nạp tiền',
+            to: `${config.routes.profile}`,
+        },
+        {
+            icon: <FontAwesomeIcon icon={faCommentDollar} />,
+            title: 'Lịch sử nạp tiền',
+            to: `${config.routes.profile}`,
+        },
+        {
+            icon: <FontAwesomeIcon icon={faHeart} />,
+            title: 'Tin đã lưu',
             to: `${config.routes.profile}`,
         },
         {

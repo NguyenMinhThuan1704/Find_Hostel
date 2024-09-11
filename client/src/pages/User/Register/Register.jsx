@@ -31,10 +31,11 @@ function Register() {
             roleId: values.roleId,
         };
 
-        const isSuccess = await dispatch(actions.register(payload));
+        let isSuccess = await dispatch(actions.register(payload));
         if (isSuccess) {
             toast.success('Đăng ký thành công!');
             setTimeout(() => {
+                isSuccess = false;
                 navigate(config.routes.login);
             }, 2000);
         } else {

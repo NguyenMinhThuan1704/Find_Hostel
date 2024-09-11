@@ -30,9 +30,11 @@ function Login() {
         setSubmitting(false);
     };
 
+    console.log(msg, isSuccess);
+
     useEffect(() => {
         if (msg) {
-            if (isSuccess) {
+            if (isSuccess === true) {
                 toast.success('Đăng nhập thành công');
                 setTimeout(() => {
                     navigate(config.routes.home);
