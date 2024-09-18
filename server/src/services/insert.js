@@ -34,7 +34,7 @@ const dataBody = [
 const hashPassword = (password) =>
   bcrypt.hashSync(password, bcrypt.genSaltSync(12));
 
-export const insertService1 = () =>
+export const insertService = () =>
   new Promise(async (resolve, reject) => {
     try {
       const provinceCodes = [];
@@ -125,16 +125,24 @@ export const insertService1 = () =>
             created: createdFormatted,
             expired: expiredFormatted,
           });
-          await db.User.create({
-            id: userId,
-            name: item?.contact?.content.find((i) => i.name === "Liên hệ:")
-              ?.content,
-            password: hashPassword("123456"),
-            phone: item?.contact?.content.find((i) => i.name === "Điện thoại:")
-              ?.content,
-            zalo: item?.contact?.content.find((i) => i.name === "Zalo")
-              ?.content,
-            roleId: 1,
+          await db.User.findOrCreate({
+            where: {
+              phone: item?.contact?.content.find(
+                (i) => i.name === "Điện thoại:"
+              )?.content,
+            },
+            defaults: {
+              id: userId,
+              name: item?.contact?.content.find((i) => i.name === "Liên hệ:")
+                ?.content,
+              password: hashPassword("123456"),
+              phone: item?.contact?.content.find(
+                (i) => i.name === "Điện thoại:"
+              )?.content,
+              zalo: item?.contact?.content.find((i) => i.name === "Zalo")
+                ?.content,
+              roleId: 1,
+            },
           });
         });
       });
@@ -180,3 +188,26 @@ export const insertService1 = () =>
 //       reject(err);
 //     }
 //   });
+
+export const createPricesAndAreas = () =>
+  new Promise((resolve, reject) => {
+    try {
+      dataPrice.forEach(async (item, index) => {
+        await db.Price.create({
+          code: item.code,
+          value: item.value,
+          order: index + 1,
+        });
+      });
+      dataArea.forEach(async (item, index) => {
+        await db.Area.create({
+          code: item.code,
+          value: item.value,
+          order: index + 1,
+        });
+      });
+      resolve("OK");
+    } catch (err) {
+      reject(err);
+    }
+  });

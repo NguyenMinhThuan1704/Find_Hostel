@@ -44,7 +44,7 @@ function AccountManagement() {
                             className=" block w-full my-6 border border-solid border-gray-300 rounded-md px-3 py-2"
                         />
                         <div className="w-full text-right">
-                            <Link className=" text-blue-600">Đổi số điện thoại</Link>
+                            <Link className=" text-blue-500 hover:text-blue-800">Đổi số điện thoại</Link>
                         </div>
                     </div>
                 </div>
@@ -95,7 +95,7 @@ function AccountManagement() {
 
                 <div className="mb-4 flex ">
                     <label className="block text-3xl font-medium text-gray-700">Mật khẩu</label>
-                    <Link className="ml-4 text-blue-600">Đổi mật khẩu</Link>
+                    <Link className="ml-4 text-blue-500 hover:text-blue-800">Đổi mật khẩu</Link>
                 </div>
 
                 <div className="mb-4 flex">

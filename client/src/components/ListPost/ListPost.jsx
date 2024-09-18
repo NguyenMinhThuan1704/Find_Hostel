@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import ListItem from './ListItem';
+import ScrollToTop from 'components/ScrollToTop';
 
-function ListPost() {
-    const [activeButton, setActiveButton] = useState('default'); // 'Mặc định' is the default active
+function ListPost({ postData, page }) {
+    const [activeButton, setActiveButton] = useState('default');
 
     const handleButtonClick = (button) => {
-        setActiveButton(button); // Set the clicked button as active
+        setActiveButton(button);
     };
 
     return (
         <div className="border border-solid rounded-xl bg-white">
+            <ScrollToTop page={page} />
             <div className="p-6">
                 <h2 className="font-bold text-[18px]">Danh sách tin đăng</h2>
                 <div className="flex items-center mt-4">
@@ -35,7 +37,7 @@ function ListPost() {
                 </div>
             </div>
 
-            <ListItem />
+            {postData?.length > 0 && postData.map((post) => <ListItem key={post.id} post={post} />)}
         </div>
     );
 }

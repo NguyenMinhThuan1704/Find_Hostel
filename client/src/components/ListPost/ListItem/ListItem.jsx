@@ -1,53 +1,95 @@
+import { faHeart } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as SolidHeart } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'components/Image';
-import React from 'react';
-import icons from 'utils/icons';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { formatVietnameseToString } from 'utils/Common/formatVietnameseToString';
 
-const { GrStar } = icons;
+function ListItem({ post }) {
+    const [isHovered, setIsHovered] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
 
-function ListItem() {
+    const renderStars = (num) => {
+        return Array(num)
+            .fill(0)
+            .map((_, i) => (
+                <span key={i} className="text-yellow-500">
+                    ★
+                </span>
+            ));
+    };
+
+    const handleClick = () => {
+        setIsClicked(!isClicked);
+    };
+
+    const img = JSON.parse(post?.images.image);
+    const des = JSON.parse(post?.description).join(' ');
+
     return (
-        <div className="p-4 bg-[#fff9f3] border border-solid border-[#E13427] border-x-0">
+        <div className="p-4 bg-[#fff9f3] border border-solid border-[#E13427] border-x-0 max-h-[265px]">
             <div className="flex">
-                <div className="w-2/5">
-                    <Image
-                        className="w-[280px] h-[240px] p-4 object-cover rounded-3xl"
-                        src="https://pt123.cdn.static123.com/images/thumbs/450x300/fit/2024/07/27/img-2047_1722050282.jpg"
-                    />
+                <div className="w-2/5 relative">
+                    <Link to={`chi-tiet/${formatVietnameseToString(post.title)}/${post.id}`}>
+                        <Image className="w-[280px] h-[240px] p-4 object-cover rounded-3xl" src={img[0]} />
+                        <div className="absolute left-[16px] bottom-[20px] text-white px-2 bg-overlay-30">
+                            {img.length} ảnh
+                        </div>
+                        <div
+                            onMouseEnter={() => setIsHovered(true)}
+                            onMouseLeave={() => setIsHovered(false)}
+                            onClick={handleClick}
+                            className="absolute right-[20px] bottom-[16px] text-[24px] cursor-pointer"
+                            title="Lưu tin này"
+                        >
+                            {isClicked ? (
+                                <FontAwesomeIcon className="text-red-500" icon={SolidHeart} />
+                            ) : isHovered ? (
+                                <FontAwesomeIcon className="text-red-500" icon={SolidHeart} />
+                            ) : (
+                                <FontAwesomeIcon className="text-zinc-400" icon={faHeart} />
+                            )}
+                        </div>
+                    </Link>
                 </div>
                 <div className="w-3/5 py-3">
-                    <div className="text-red-500">
-                        <GrStar className="inline-block pb-2" size={20} color="yellow" />
-                        <GrStar className="inline-block pb-2" size={20} color="yellow" />
-                        <GrStar className="inline-block pb-2" size={20} color="yellow" />
-                        <GrStar className="inline-block pb-2" size={20} color="yellow" />
-                        <GrStar className="inline-block pb-2" size={20} color="yellow" />
-                        Phòng trọ FULL Nội Thất, giờ giấc tự do ngay công viên Hoàng Văn Thụ.
-                    </div>
+                    <Link to={`chi-tiet/${formatVietnameseToString(post.title)}/${post.id}`}>
+                        <div className="text-red-500 line-clamp-2 hover:underline">
+                            {renderStars(+post.star)} {post.title}
+                        </div>
+                    </Link>
                     <div className="flex h-[20px] justify-between my-4">
-                        <p className="w-[25%] font-bold text-green-500">4 triệu/tháng</p>
-                        <p className="w-[25%]">20m²</p>
-                        <p className="w-1/2 line-clamp-1" title="Quận Tân Bình, Hồ Chí Minh">
-                            Quận Tân Bình, Hồ Chí Minh
+                        <p className="w-[25%] font-bold text-green-500">{post.attributes.price}</p>
+                        <p className="w-[25%]">{post.attributes.acreage}</p>
+                        <p className="w-1/2 line-clamp-1 hover:underline" title={post.address}>
+                            <Link>{`${post.address.split(',')[post.address.split(',').length - 2]},${post.address.split(',')[post.address.split(',').length - 1]}`}</Link>
                         </p>
                     </div>
                     <div className="flex justify-end mr-4 my-4">
-                        <p>44 phút trước</p>
+                        <p>{post.attributes.published}</p>
                     </div>
                     <div>
-                        <p className="line-clamp-3 text-[14px]">
-                            Cách CV Hoàng Văn Thụ 150mCách ĐH Tài Chính Marketing 300mDiện tích 20m2Mức giá: 3tr3Địa
-                            chỉ: Phạm Cự Lượng, P2, Tân Bình.Mô tả:- Có máy lạnh-điều hòa
-                        </p>
+                        <p className="line-clamp-2 text-[14px] text-[#8a8d91]">{des}</p>
                     </div>
                     <div className="my-4 flex justify-between">
                         <div className="flex items-center w-[45%]">
                             <Image className="w-[40px] h-[40px] rounded-full border border-solid mr-4" src="eqeqweq" />
-                            <p>Name</p>
+                            <p className="line-clamp-1 max-w-[140px]" title={post.user.name}>
+                                {post.user.name === null ? 'No name' : post.user.name}
+                            </p>
                         </div>
 
-                        <button className="w-[30%] bg-blue-600 text-white rounded-2xl">Gọi 0123456789</button>
+                        <button className="w-[30%] bg-blue-600 text-white rounded-2xl">
+                            <Link target="_blank" className="text-white" to={`tel:${post.user.phone}`}>
+                                Gọi {post.user.phone === null ? 'No phone' : post.user.phone}
+                            </Link>
+                        </button>
                         <button className="w-[20%] text-blue-600 border-blue-600 border border-solid rounded-2xl hover:bg-blue-600 hover:text-white">
-                            Nhắn zalo
+                            <Link target="_blank" className="hover:text-white" to={`https://zalo.me/${post.user.zalo}`}>
+                                {' '}
+                                Nhắn zalo
+                            </Link>
                         </button>
                     </div>
                 </div>

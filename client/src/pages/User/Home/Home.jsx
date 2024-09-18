@@ -1,9 +1,26 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import Area from './Area';
 import ListPost from 'components/ListPost';
 import Sidebar from 'components/Sidebar';
+import { getPostsLimit } from 'store/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import Pagination from 'components/Pagination';
+import { useSearchParams } from 'react-router-dom';
 
 function Home() {
+    const dispatch = useDispatch();
+    const [params] = useSearchParams();
+
+    const { posts } = useSelector((state) => state.post);
+
+    const page = params.get('page');
+
+    useEffect(() => {
+        let offset = page ? +page - 1 : 0;
+        dispatch(getPostsLimit(offset));
+    }, [page]);
+
     return (
         <div>
             <div className="text-center">
@@ -18,7 +35,8 @@ function Home() {
 
             <div className="w-full flex gap-4">
                 <div className="w-2/3">
-                    <ListPost />
+                    <ListPost postData={posts} page={page} />
+                    <Pagination page={page} />
                 </div>
                 <div className="w-1/3">
                     <Sidebar />

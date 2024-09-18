@@ -6,7 +6,9 @@ import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
-function BtnItem({ icon, title, isActive, onClick }) {
+function BtnItem({ icon, title, isActive, onClick, to }) {
+    console.log(to);
+
     return (
         <button
             className={cx('w-full', 'px-[20px]', 'py-[12px]', 'rounded-[12px]', 'mb-2', {
