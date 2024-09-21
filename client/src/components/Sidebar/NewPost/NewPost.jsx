@@ -14,14 +14,12 @@ function NewPost({ data }) {
                             key={index}
                             className="flex items-start space-x-3 group pb-4 border-b border-[#eee]"
                         >
-                            {/* Post Image */}
                             <Image
                                 src={post.img}
                                 alt={post.name}
                                 className="w-[60px] h-[60px] object-cover rounded-md"
                             />
 
-                            {/* Post Details */}
                             <div className="flex-1">
                                 <h3 className="text-[14px] font-bold text-gray-800 group-hover:text-blue-600 leading-snug">
                                     {post.name}

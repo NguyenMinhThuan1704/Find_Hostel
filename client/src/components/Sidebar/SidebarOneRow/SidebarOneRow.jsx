@@ -2,6 +2,7 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { formatVietnameseToString } from 'utils/Common/formatVietnameseToString';
 
 function SidebarOneRow({ data, title }) {
     return (
@@ -12,7 +13,7 @@ function SidebarOneRow({ data, title }) {
                     {data.map((item, index) => (
                         <div key={index} className="border-b border-dashed border-gray-300 pb-2">
                             <Link
-                                to="#"
+                                to={`${formatVietnameseToString(item.value)}`}
                                 className="text-[14px] flex items-center group text-gray-600 hover:text-orange-600"
                             >
                                 <FontAwesomeIcon

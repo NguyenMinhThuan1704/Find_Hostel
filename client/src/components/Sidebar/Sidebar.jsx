@@ -36,8 +36,8 @@ function Sidebar() {
 
     return (
         <div className="flex flex-col gap-6">
-            <SidebarTwoRow data={prices} title="Xem theo giá" />
-            <SidebarTwoRow data={areas} title="Xem theo diện tích" />
+            <SidebarTwoRow data={prices} type="priceCode" title="Xem theo giá" />
+            <SidebarTwoRow data={areas} type="areaCode" title="Xem theo diện tích" />
             <SidebarOneRow data={categories} title="Danh mục cho thuê" />
             <NewPost data={newPostData} />
         </div>

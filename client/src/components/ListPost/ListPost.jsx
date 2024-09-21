@@ -37,7 +37,11 @@ function ListPost({ postData, page }) {
                 </div>
             </div>
 
-            {postData?.length > 0 && postData.map((post) => <ListItem key={post.id} post={post} />)}
+            {postData?.length > 0 ? (
+                postData.map((post) => <ListItem key={post.id} post={post} />)
+            ) : (
+                <p className="text-center text-[20px] my-4">Không có bài đăng nào</p>
+            )}
         </div>
     );
 }

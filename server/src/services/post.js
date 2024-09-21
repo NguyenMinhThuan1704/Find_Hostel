@@ -1,3 +1,4 @@
+import { where } from "sequelize";
 import db from "../models";
 
 // GET all categories
@@ -28,13 +29,15 @@ export const getPostService = () =>
     }
   });
 
-export const getPostLimitService = (page) =>
+export const getPostLimitService = (page, query) =>
   new Promise(async (resolve, reject) => {
     try {
+      let offset = !page || +page <= 1 ? 0 : +page - 1;
       const response = await db.Post.findAndCountAll({
+        where: query,
         raw: true,
         nest: true,
-        offset: page * 5 || 0,
+        offset: offset * 5 || 0,
         limit: 5,
         include: [
           { model: db.Image, as: "images", attributes: ["image"] },

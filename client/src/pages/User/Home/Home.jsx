@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import Area from './Area';
@@ -10,16 +11,23 @@ import { useSearchParams } from 'react-router-dom';
 
 function Home() {
     const dispatch = useDispatch();
-    const [params] = useSearchParams();
+    const [searchParams] = useSearchParams();
 
     const { posts } = useSelector((state) => state.post);
 
-    const page = params.get('page');
+    const page = searchParams.get('page');
 
     useEffect(() => {
-        let offset = page ? +page - 1 : 0;
-        dispatch(getPostsLimit(offset));
-    }, [page]);
+        let params = [];
+        for (let entry of searchParams.entries()) {
+            params.push(entry);
+        }
+        let searchParamsOj = {};
+        params?.map((i) => {
+            searchParamsOj = { ...searchParamsOj, [i[0]]: i[1] };
+        });
+        dispatch(getPostsLimit(searchParamsOj));
+    }, [searchParams]);
 
     return (
         <div>
@@ -36,7 +44,7 @@ function Home() {
             <div className="w-full flex gap-4">
                 <div className="w-2/3">
                     <ListPost postData={posts} page={page} />
-                    <Pagination page={page} />
+                    <Pagination />
                 </div>
                 <div className="w-1/3">
                     <Sidebar />
