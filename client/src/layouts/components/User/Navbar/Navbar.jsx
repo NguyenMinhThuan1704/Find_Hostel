@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import Image from 'components/Image';
 import img from 'assets/img';
@@ -11,15 +11,15 @@ import { formatVietnameseToString } from 'utils/Common/formatVietnameseToString'
 const cx = classNames.bind(styles);
 
 const Navbar = () => {
-    const [categories, SetCategories] = useState([]);
-    const [activeItem, setActiveItem] = useState('TC');
+    const [categories, setCategories] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
+    const location = useLocation();
 
     useEffect(() => {
         const fetchCategories = async () => {
             const response = await apiGetAllCategories();
             if (response?.data.err === 0) {
-                SetCategories(response.data.response);
+                setCategories(response.data.response);
             }
         };
         fetchCategories();
@@ -55,28 +55,14 @@ const Navbar = () => {
                 className="hidden sm:grid gap-4 flex-1 justify-between"
                 style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: 0 }}
             >
-                {/* <NavLink
-                    to="/"
-                    onClick={() => setActiveItem('home')}
-                    className={(nav) =>
-                        cx('flex-1 text-center px-3.5 py-3.5 cursor-pointer text-white', {
-                            'bg-[#f73859]': activeItem === 'home',
-                            'hover:bg-[#f73859]': activeItem !== 'home',
-                        })
-                    }
-                >
-                    Trang chủ
-                </NavLink> */}
                 {menuPcItems.map((item) => (
                     <NavLink
                         key={item.code}
                         to={item.path}
-                        // to="/"
-                        onClick={() => setActiveItem(item.code)}
-                        className={(nav) =>
+                        className={(navData) =>
                             cx('flex-1 text-center px-3.5 py-3.5 cursor-pointer text-white', {
-                                'bg-[#f73859]': activeItem === item.code,
-                                'hover:bg-[#f73859]': activeItem !== item.code,
+                                'bg-[#f73859]': navData.isActive,
+                                'hover:bg-[#f73859]': !navData.isActive,
                             })
                         }
                     >
@@ -114,15 +100,13 @@ const Navbar = () => {
                         </button>
                     </div>
 
-                    {menumbItems.map((item) => (
+                    {menumbItems.map((item, index) => (
                         <Link
-                            key={item}
-                            onClick={() => {
-                                setActiveItem(item);
-                                closeMenu();
-                            }}
+                            key={index}
+                            to={menuPcItems[index]?.path || '#'} // Ensure correct paths are used
+                            onClick={closeMenu}
                             className={`px-6 py-4 text-white text-xl ${
-                                activeItem === item ? 'bg-[#f73859]' : 'hover:bg-[#f73859]'
+                                location.pathname === menuPcItems[index]?.path ? 'bg-[#f73859]' : 'hover:bg-[#f73859]'
                             }`}
                         >
                             {item}

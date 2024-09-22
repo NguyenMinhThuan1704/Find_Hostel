@@ -5,15 +5,13 @@ import Area from './Area';
 import ListPost from 'components/ListPost';
 import Sidebar from 'components/Sidebar';
 import { getPostsLimit } from 'store/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Pagination from 'components/Pagination';
 import { useSearchParams } from 'react-router-dom';
 
 function Home() {
     const dispatch = useDispatch();
     const [searchParams] = useSearchParams();
-
-    const { posts } = useSelector((state) => state.post);
 
     const page = searchParams.get('page');
 
@@ -43,7 +41,7 @@ function Home() {
 
             <div className="w-full flex gap-4">
                 <div className="w-2/3">
-                    <ListPost postData={posts} page={page} />
+                    <ListPost page={page} />
                     <Pagination />
                 </div>
                 <div className="w-1/3">

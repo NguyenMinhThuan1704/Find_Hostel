@@ -27,3 +27,16 @@ export const apiGetPostLimit = (query) =>
             reject(error);
         }
     });
+
+export const apiGetNewPosts = () =>
+    new Promise(async (resolve, reject) => {
+        try {
+            const response = await axiosConfig({
+                method: 'get',
+                url: `/api/v1/post/new-post`,
+            });
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });

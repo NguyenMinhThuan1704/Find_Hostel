@@ -1,9 +1,28 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import ListItem from './ListItem';
 import ScrollToTop from 'components/ScrollToTop';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+import { getPostsLimit } from 'store/actions';
 
-function ListPost({ postData, page }) {
+function ListPost({ categoryCode, page }) {
+    const dispatch = useDispatch();
+    const [searchParams] = useSearchParams();
+    const { posts } = useSelector((state) => state.post);
     const [activeButton, setActiveButton] = useState('default');
+
+    useEffect(() => {
+        const searchParamsObject = Object.fromEntries(searchParams.entries());
+
+        // Nếu có categoryCode, thêm vào đối tượng searchParamsObject
+        if (categoryCode) {
+            searchParamsObject.categoryCode = categoryCode;
+        }
+
+        // Dispatch để lấy dữ liệu bài đăng với các searchParams
+        dispatch(getPostsLimit(searchParamsObject));
+    }, [searchParams, categoryCode]);
 
     const handleButtonClick = (button) => {
         setActiveButton(button);
@@ -37,8 +56,8 @@ function ListPost({ postData, page }) {
                 </div>
             </div>
 
-            {postData?.length > 0 ? (
-                postData.map((post) => <ListItem key={post.id} post={post} />)
+            {posts?.length > 0 ? (
+                posts.map((post) => <ListItem key={post.id} post={post} />)
             ) : (
                 <p className="text-center text-[20px] my-4">Không có bài đăng nào</p>
             )}

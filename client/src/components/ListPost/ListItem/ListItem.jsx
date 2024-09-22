@@ -56,7 +56,7 @@ function ListItem({ post }) {
                 <div className="w-3/5 py-3">
                     <Link to={`chi-tiet/${formatVietnameseToString(post.title)}/${post.id}`}>
                         <div className="text-red-500 line-clamp-2 hover:underline">
-                            {renderStars(+post.star)} {post.title}
+                            {renderStars(+post.star || 0)} {post.title}
                         </div>
                     </Link>
                     <div className="flex h-[20px] justify-between my-4">

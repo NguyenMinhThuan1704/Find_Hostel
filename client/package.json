@@ -23,6 +23,7 @@
         "classnames": "^2.5.1",
         "font-awesome": "^4.7.0",
         "formik": "^2.4.6",
+        "moment": "^2.30.1",
         "next": "^14.2.5",
         "normalize.css": "^8.0.1",
         "react": "^18.3.1",
