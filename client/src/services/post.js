@@ -1,4 +1,5 @@
 import axiosConfig from 'axiosConfig';
+import qs from 'qs';
 
 export const apiGetPost = (payload) =>
     new Promise(async (resolve, reject) => {
@@ -20,6 +21,7 @@ export const apiGetPostLimit = (query) =>
             const response = await axiosConfig({
                 method: 'get',
                 url: `/api/v1/post/limit`,
+                paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'repeat' }),
                 params: query,
             });
             resolve(response);

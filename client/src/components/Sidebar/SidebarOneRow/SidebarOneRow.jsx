@@ -13,14 +13,16 @@ function SidebarOneRow({ data, title }) {
                     {data.map((item, index) => (
                         <div key={index} className="border-b border-dashed border-gray-300 pb-2">
                             <Link
-                                to={`${formatVietnameseToString(item.value)}`}
+                                to={`/${formatVietnameseToString(item.value)}`}
                                 className="text-[14px] flex items-center group text-gray-600 hover:text-orange-600"
                             >
                                 <FontAwesomeIcon
                                     icon={faAngleRight}
                                     className="mr-4 text-gray-400 text-[10px] group-hover:text-orange-600"
                                 />
-                                <p className="text-black group-hover:text-orange-600 line-clamp-1">{item.value}</p>
+                                <p title={item?.value} className="text-black group-hover:text-orange-600 line-clamp-1">
+                                    {item?.value}
+                                </p>
                             </Link>
                         </div>
                     ))}

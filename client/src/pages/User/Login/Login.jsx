@@ -30,8 +30,6 @@ function Login() {
         setSubmitting(false);
     };
 
-    console.log(msg, isSuccess);
-
     useEffect(() => {
         if (msg) {
             if (isSuccess === true) {
@@ -44,8 +42,6 @@ function Login() {
             }
         }
     }, [msg, update, isSuccess, navigate]);
-
-    console.log(msg, isSuccess);
 
     return (
         <div className="flex justify-center items-center bg-gray-100 p-[30px] ">

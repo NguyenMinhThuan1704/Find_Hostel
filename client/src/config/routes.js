@@ -10,6 +10,7 @@ const routes = {
     rentalSpace: `/cho-thue-mat-bang`,
     news: `/tin-tuc`,
     listPrice: '/bang-gia-dich-vu',
+    search: 'tim-kiem',
 
     profile: '/tai-khoan',
     postManage: '/tin-dang',

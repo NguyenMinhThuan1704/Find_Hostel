@@ -36,7 +36,7 @@ function Rental() {
             <div className="w-full flex gap-4">
                 <div className="w-2/3">
                     <ListPost categoryCode={categoryCode} page={page} />
-                    <Pagination />
+                    <Pagination page={1 || 0} />
                 </div>
                 <div className="w-1/3">
                     <Sidebar />

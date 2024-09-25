@@ -11,6 +11,7 @@ import ForgotPassword from 'pages/User/ForgotPassword';
 import Rental from 'pages/User/Rental';
 import News from 'pages/User/News';
 import ListPrice from 'pages/User/ListPrice';
+import Search from 'pages/User/Search';
 
 import AccountManagement from 'pages/User/Manage/AccountManagement';
 import PostManagement from 'pages/User/Manage/PostManagement';
@@ -36,6 +37,7 @@ const publicRoutes = [
     { path: config.routes.news, component: News },
     { path: config.routes.listPrice, component: ListPrice },
     { path: config.routes.detailPost, component: DetailPost },
+    { path: config.routes.search, component: Search },
 
     { path: config.routes.profile, component: AccountManagement, layout: AccountLayout },
     { path: config.routes.postManage, component: PostManagement, layout: AccountLayout },

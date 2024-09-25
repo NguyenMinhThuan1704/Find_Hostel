@@ -19,6 +19,21 @@ module.exports = {
                 'overlay-30': 'rgba(0,0,0,0.3)',
                 'overlay-70': 'rgba(0,0,0,0.7)',
             },
+            animation: {
+                'slide-right': 'slide-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
+            },
+            keyframes: {
+                ' slide-right ': {
+                    '0%': {
+                        '-webkit-transform': 'translateX(0)',
+                        transform: 'translateX(0)',
+                    },
+                    '100%': {
+                        '-webkit-transform': 'translateX(100px)',
+                        transform: 'translateX(100px)',
+                    },
+                },
+            },
         },
     },
     variants: {

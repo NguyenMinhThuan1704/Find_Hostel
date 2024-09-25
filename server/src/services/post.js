@@ -1,5 +1,6 @@
 import { where } from "sequelize";
 import db from "../models";
+const { Op } = require("sequelize");
 
 // GET all categories
 export const getPostService = () =>
@@ -29,12 +30,30 @@ export const getPostService = () =>
     }
   });
 
-export const getPostLimitService = (page, query) =>
+export const getPostsLimitService = (
+  page,
+  query,
+  { priceNumber, areaNumber, provinceCode }
+) =>
   new Promise(async (resolve, reject) => {
     try {
       let offset = !page || +page <= 1 ? 0 : +page - 1;
+      const queries = { ...query };
+
+      if (priceNumber) {
+        queries.priceNumber = { [Op.between]: priceNumber };
+      }
+
+      if (areaNumber) {
+        queries.areaNumber = { [Op.between]: areaNumber };
+      }
+
+      if (provinceCode) {
+        queries.address = { [Op.like]: `%${provinceCode}%` };
+      }
+
       const response = await db.Post.findAndCountAll({
-        where: query,
+        where: queries,
         raw: true,
         nest: true,
         offset: offset * 5 || 0,
@@ -52,11 +71,11 @@ export const getPostLimitService = (page, query) =>
       });
       resolve({
         err: response ? 0 : 1,
-        msg: response ? "Ok" : "Failed to find all post",
+        msg: response ? "OK" : "Getting posts is failed.",
         response,
       });
     } catch (error) {
-      reject();
+      reject(error);
     }
   });
 

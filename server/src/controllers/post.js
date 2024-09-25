@@ -12,16 +12,21 @@ export const getPost = async (req, res) => {
   }
 };
 
-export const getPostLimit = async (req, res) => {
-  const { page, ...query } = req.query;
+export const getPostsLimit = async (req, res) => {
+  const { page, priceNumber, areaNumber, provinceCode, ...query } = req.query;
 
   try {
-    const response = await PostService.getPostLimitService(page, query);
+    const response = await PostService.getPostsLimitService(page, query, {
+      priceNumber,
+      areaNumber,
+      provinceCode,
+    });
+
     return res.status(200).json(response);
   } catch (error) {
     return res.status(500).json({
       err: -1,
-      msg: "Failed to get all post controller" + error,
+      msg: "Failed at post controller: " + error,
     });
   }
 };

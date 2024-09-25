@@ -13,14 +13,20 @@ function ListPost({ categoryCode, page }) {
     const [activeButton, setActiveButton] = useState('default');
 
     useEffect(() => {
-        const searchParamsObject = Object.fromEntries(searchParams.entries());
-
-        // Nếu có categoryCode, thêm vào đối tượng searchParamsObject
-        if (categoryCode) {
-            searchParamsObject.categoryCode = categoryCode;
+        let params = [];
+        for (let entry of searchParams.entries()) {
+            params.push(entry);
         }
+        let searchParamsObject = {};
+        params?.forEach((i) => {
+            if (Object.keys(searchParamsObject)?.some((item) => item === i[0])) {
+                searchParamsObject[i[0]] = [...searchParamsObject[i[0]], i[1]];
+            } else {
+                searchParamsObject = { ...searchParamsObject, [i[0]]: [i[1]] };
+            }
+        });
+        if (categoryCode) searchParamsObject.categoryCode = categoryCode;
 
-        // Dispatch để lấy dữ liệu bài đăng với các searchParams
         dispatch(getPostsLimit(searchParamsObject));
     }, [searchParams, categoryCode]);
 

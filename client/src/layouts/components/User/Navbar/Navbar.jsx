@@ -26,7 +26,7 @@ const Navbar = () => {
     }, []);
 
     const menuPcItems = [
-        { title: 'Trang chủ', path: '/', code: 'TC' },
+        { title: 'Trang chủ', path: '/*', code: 'TC' },
         ...categories.map((item) => ({
             id: item.id,
             title: item.value,

@@ -16,6 +16,7 @@ function Sidebar() {
         dispatch(actions.getPrices());
         dispatch(actions.getAreas());
         dispatch(actions.getNewPosts());
+        dispatch(actions.getProvinces());
     }, []);
 
     return (

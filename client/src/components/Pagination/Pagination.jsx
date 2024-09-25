@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { useSearchParams } from 'react-router-dom';
 
-const Pagination = () => {
+const Pagination = ({ page }) => {
     const { count } = useSelector((state) => state.post);
     const [arrPage, setArrPage] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -21,7 +21,16 @@ const Pagination = () => {
         } else if (!page) {
             setCurrentPage(1);
         }
-    }, [searchParams, currentPage]);
+    }, [searchParams]);
+
+    useEffect(() => {
+        let page = searchParams.get('page');
+        if (page && +page !== currentPage) {
+            setCurrentPage(+page);
+        } else if (!page) {
+            setCurrentPage(1);
+        }
+    }, [searchParams]);
 
     const limitPosts = process.env.REACT_APP_LIMIT_POST || 5;
 
