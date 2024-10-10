@@ -1,5 +1,5 @@
 import axios from '../axiosConfig';
-import Axios from 'axios';
+import axiosDefault from 'axios';
 
 export const apiGetPrices = () =>
     new Promise(async (resolve, reject) => {
@@ -30,11 +30,49 @@ export const apiGetAreas = () =>
 export const apiGetProvinces = () =>
     new Promise(async (resolve, reject) => {
         try {
-            const response = await Axios({
+            const response = await axiosDefault({
                 method: 'get',
-                url: 'https://esgoo.net/api-tinhthanh/4/0.htm',
+                url: 'https://esgoo.net/api-tinhthanh/1/0.htm',
             });
 
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });
+
+export const apiGetPublicProvinces = () =>
+    new Promise(async (resolve, reject) => {
+        try {
+            const response = await axiosDefault({
+                method: 'get',
+                url: 'https://esgoo.net/api-tinhthanh/1/0.htm',
+            });
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });
+export const apiGetPublicDistrict = (provinceId) =>
+    new Promise(async (resolve, reject) => {
+        try {
+            const response = await axiosDefault({
+                method: 'get',
+                url: `https://esgoo.net/api-tinhthanh/2/${provinceId}.htm`,
+            });
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });
+
+export const apiGetPublicWard = (districtId) =>
+    new Promise(async (resolve, reject) => {
+        try {
+            const response = await axiosDefault({
+                method: 'get',
+                url: `https://esgoo.net/api-tinhthanh/3/${districtId}.htm`,
+            });
             resolve(response);
         } catch (error) {
             reject(error);

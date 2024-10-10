@@ -26,7 +26,7 @@ const Navbar = () => {
     }, []);
 
     const menuPcItems = [
-        { title: 'Trang chủ', path: '/*', code: 'TC' },
+        { title: 'Trang chủ', path: '/', code: 'TC' },
         ...categories.map((item) => ({
             id: item.id,
             title: item.value,
@@ -53,7 +53,7 @@ const Navbar = () => {
             {/* PC Navbar */}
             <div
                 className="hidden sm:grid gap-4 flex-1 justify-between"
-                style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: 0 }}
+                style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(132px, 1fr))', gap: 0 }}
             >
                 {menuPcItems.map((item) => (
                     <NavLink

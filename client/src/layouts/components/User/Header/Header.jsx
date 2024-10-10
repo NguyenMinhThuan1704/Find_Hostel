@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import Image from 'components/Image';
@@ -29,10 +30,17 @@ const cx = classNames.bind(styles);
 function Header() {
     const dispatch = useDispatch();
     const { isLoggedIn } = useSelector((state) => state.auth);
+    const { currentData } = useSelector((state) => state.user);
 
     const handleLogout = () => {
         dispatch(actions.logout());
     };
+
+    useEffect(() => {
+        setTimeout(() => {
+            isLoggedIn && dispatch(actions.getCurrent());
+        }, 100);
+    }, [isLoggedIn]);
 
     const userMenu = [
         {
@@ -90,26 +98,31 @@ function Header() {
                     <p className="ml-2">Yêu thích</p>
                 </Link>
                 {isLoggedIn ? (
-                    <Menu items={userMenu}>
-                        <Image
-                            src=""
-                            className={cx(
-                                'user-avatar',
-                                'w-[32px]',
-                                'h-[32px]',
-                                'ml-6',
-                                'mr-[25px]',
-                                'cursor-pointer',
-                                'rounded-full',
-                                'border',
-                                'border-black',
-                                'border-solid',
-                                'hidden',
-                                'md:block',
-                            )}
-                            alt="Nguyen Minh Thuan"
-                        ></Image>
-                    </Menu>
+                    <>
+                        <Menu items={userMenu}>
+                            <Image
+                                src=""
+                                className={cx(
+                                    'user-avatar',
+                                    'w-[32px]',
+                                    'h-[32px]',
+                                    'ml-6',
+                                    'mr-[6px]',
+                                    'cursor-pointer',
+                                    'rounded-full',
+                                    'border',
+                                    'border-black',
+                                    'border-solid',
+                                    'hidden',
+                                    'md:block',
+                                )}
+                                alt="Nguyen Minh Thuan"
+                            ></Image>
+                        </Menu>
+                        <p className="mr-8 line-clamp-1 max-w-[134px]" title={currentData.name}>
+                            {currentData.name}
+                        </p>
+                    </>
                 ) : (
                     <p className="flex items-center">
                         <Link to={config.routes.login} className="flex justify-center items-center p-4 hover:underline">
@@ -126,7 +139,7 @@ function Header() {
                     </p>
                 )}
 
-                <Button className="bg-[#f73859] w-auto h-[40px] hover:underline">
+                <Button to={config.routes.createPost} className="bg-[#f73859] w-auto h-[40px] hover:underline">
                     <div className="flex text-white">
                         <p className="mr-2">Đăng ký miễn phí</p>
                         <FontAwesomeIcon icon={faPlus} />

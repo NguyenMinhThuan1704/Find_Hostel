@@ -147,9 +147,9 @@ export const insertService = () =>
         });
       });
       // console.log(provinceCodes);
-      // provinceCodes?.forEach(async (item) => {
-      //   await db.Province.create(item);
-      // });
+      provinceCodes?.forEach(async (item) => {
+        await db.Province.create(item);
+      });
       labelCodes?.forEach(async (item) => {
         await db.Label.create(item);
       });

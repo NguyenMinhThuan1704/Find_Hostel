@@ -12,13 +12,15 @@ import Rental from 'pages/User/Rental';
 import News from 'pages/User/News';
 import ListPrice from 'pages/User/ListPrice';
 import Search from 'pages/User/Search';
+import DetailPost from 'pages/User/DetailPost';
 
 import AccountManagement from 'pages/User/Manage/AccountManagement';
 import PostManagement from 'pages/User/Manage/PostManagement';
 import RechargeHistory from 'pages/User/Manage/RechargeHistory';
 import PaymentHistory from 'pages/User/Manage/PaymentHistory';
 import Contact from 'pages/User/Manage/Contact';
-import DetailPost from 'pages/User/DetailPost';
+import CreatePost from 'pages/User/Manage/CreatePost';
+import Recharge from 'pages/User/Manage/Recharge';
 
 // Public routes
 const publicRoutes = [
@@ -44,6 +46,8 @@ const publicRoutes = [
     { path: config.routes.rechargeHistory, component: RechargeHistory, layout: AccountLayout },
     { path: config.routes.paymentHistory, component: PaymentHistory, layout: AccountLayout },
     { path: config.routes.contact, component: Contact, layout: AccountLayout },
+    { path: config.routes.createPost, component: CreatePost, layout: AccountLayout },
+    { path: config.routes.recharge, component: Recharge, layout: AccountLayout },
 ];
 
 const privateRoutes = [];

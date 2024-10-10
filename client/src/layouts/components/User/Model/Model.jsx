@@ -89,6 +89,7 @@ function Model({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
             },
         );
     };
+
     return (
         <div
             onClick={() => {
@@ -127,26 +128,54 @@ function Model({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
                             />
                             <label htmlFor="default">{defaultText}</label>
                         </span>
-                        {content?.map((item) => {
-                            return (
-                                <span key={item.code} className="py-2 flex gap-2 items-center border-b border-gray-200">
-                                    <input
-                                        type="radio"
-                                        name={name}
-                                        id={item.code || item.name_en}
-                                        value={item.code || item.name_en}
-                                        checked={item.code || item.name_en === queries[`${name}Code`] ? true : false}
-                                        onChange={(e) =>
-                                            handleSubmit(e, {
-                                                [name]: item.value || item.name,
-                                                [`${name}Code`]: item.code || item.name_en,
-                                            })
-                                        }
-                                    />
-                                    <label htmlFor={item.code || item.name_en}>{item.value || item.name}</label>
-                                </span>
-                            );
-                        })}
+                        {name === 'province' &&
+                            content?.map((item) => {
+                                return (
+                                    <span
+                                        key={item.id}
+                                        className="py-2 flex gap-2 items-center border-b border-gray-200"
+                                    >
+                                        <input
+                                            type="radio"
+                                            name={name}
+                                            id={item.name_en}
+                                            value={item.name}
+                                            checked={item.name_en === queries[`${name}Code`] ? true : false}
+                                            onChange={(e) =>
+                                                handleSubmit(e, {
+                                                    [name]: item.name,
+                                                    [`${name}Code`]: item.name_en,
+                                                })
+                                            }
+                                        />
+                                        <label htmlFor={item.name_en}>{item.name}</label>
+                                    </span>
+                                );
+                            })}
+                        {name === 'category' &&
+                            content?.map((item) => {
+                                return (
+                                    <span
+                                        key={item.code}
+                                        className="py-2 flex gap-2 items-center border-b border-gray-200"
+                                    >
+                                        <input
+                                            type="radio"
+                                            name={name}
+                                            id={item.code}
+                                            value={item.code}
+                                            checked={item.code === queries[`${name}Code`] ? true : false}
+                                            onChange={(e) =>
+                                                handleSubmit(e, {
+                                                    [name]: item.value,
+                                                    [`${name}Code`]: item.code,
+                                                })
+                                            }
+                                        />
+                                        <label htmlFor={item.code}>{item.value}</label>
+                                    </span>
+                                );
+                            })}
                     </div>
                 )}
 

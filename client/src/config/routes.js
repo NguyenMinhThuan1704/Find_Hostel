@@ -1,6 +1,6 @@
 const routes = {
-    home: '/*',
-    home__page: ':page',
+    home: '/',
+    home__page: '/:page',
     login: '/login',
     register: '/register',
     forgotPassword: '/forgotPassword',
@@ -11,13 +11,15 @@ const routes = {
     news: `/tin-tuc`,
     listPrice: '/bang-gia-dich-vu',
     search: 'tim-kiem',
-
-    profile: '/tai-khoan',
-    postManage: '/tin-dang',
-    rechargeHistory: '/lich-su-nap-tien',
-    paymentHistory: '/lich-su-thanh-toan',
-    contact: '/lien-he',
     detailPost: '/chi-tiet/:title/:postId',
+
+    profile: '/he-thong/tai-khoan',
+    postManage: '/he-thong/tin-dang',
+    createPost: '/he-thong/tin-dang/dang-tin-moi',
+    rechargeHistory: '/he-thong/lich-su-nap-tien',
+    paymentHistory: '/he-thong/lich-su-thanh-toan',
+    contact: '/he-thong/lien-he',
+    recharge: '/he-thong/nap-tien',
 };
 
 export default routes;

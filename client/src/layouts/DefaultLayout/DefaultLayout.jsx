@@ -9,14 +9,17 @@ import Support from 'layouts/components/User/Support';
 import Footer from 'layouts/components/User/Footer';
 import Search from 'layouts/components/User/Search';
 
+import { useSelector } from 'react-redux';
+
 const cx = classNames.bind(styles);
 
 function DefaultLayout({ children }) {
+    const { isLoggedIn } = useSelector((state) => state.auth);
     return (
         <div className={cx('wrapper', 'bg-[#f5f5f5]')}>
             <Header />
             <Navbar />
-            <Search />
+            {isLoggedIn && <Search />}
             <div className={cx('container')}>
                 <div className={cx('content', 'sm:mx-[100px]')}>{children}</div>
             </div>

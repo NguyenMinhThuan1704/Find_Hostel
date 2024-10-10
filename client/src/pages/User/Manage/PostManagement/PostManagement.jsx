@@ -42,7 +42,7 @@ function PostManagement() {
                         <option>Tin đang ẩn</option>
                     </select>
                     <Button
-                        to={config.routes.profile}
+                        to={config.routes.createPost}
                         className="bg-red-500 text-white text-center px-4 py-2 rounded-md hover:bg-red-700 w-full sm:w-auto"
                     >
                         Đăng tin mới

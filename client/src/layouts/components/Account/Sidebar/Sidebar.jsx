@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
-import PropTypes from 'prop-types';
 import Image from 'components/Image';
 import img from 'assets/img';
 import BtnItem from './BtnItem';
@@ -14,8 +13,10 @@ import {
     faClockRotateLeft,
     faComment,
 } from '@fortawesome/free-solid-svg-icons';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import config from 'config';
+import * as actions from 'store/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
@@ -26,21 +27,19 @@ const menuItems = [
     { to: `${config.routes.rechargeHistory}`, icon: faCommentDollar, title: 'Lịch sử nạp tiền' },
     { to: `${config.routes.paymentHistory}`, icon: faClockRotateLeft, title: 'Lịch sử thanh toán' },
     { to: `${config.routes.contact}`, icon: faComment, title: 'Liên hệ' },
-    { to: `${config.routes.home}`, icon: faArrowRightToBracket, title: 'Thoát' },
+    { to: `${config.routes.logout}`, icon: faArrowRightToBracket, title: 'Thoát' },
 ];
 
 function Sidebar({ isOpen, onClose }) {
+    const dispatch = useDispatch();
     const location = useLocation();
+    const navigate = useNavigate();
     const [activeIndex, setActiveIndex] = useState(0);
+    const { currentData } = useSelector((state) => state.user);
 
-    const user = {
-        id: 1,
-        name: 'Nguyễn Minh Thuận',
-        email: 'admin@example.com',
-        phone: '0987654321',
-        address: '123 Main St, Anytown, USA',
-        avatar: 'dsadsadas',
-        cash: '10.000.000 VNĐ',
+    const handleLogout = () => {
+        dispatch(actions.logout());
+        navigate(config.routes.login);
     };
 
     useEffect(() => {
@@ -67,16 +66,39 @@ function Sidebar({ isOpen, onClose }) {
                 </div>
 
                 <div className={cx('py-4')}>
-                    {menuItems.map((item, index) => (
-                        <Link to={item.to} key={index} onClick={onClose}>
-                            <BtnItem
-                                icon={item.icon}
-                                title={item.title}
-                                isActive={activeIndex === index}
-                                onClick={() => setActiveIndex(index)}
-                            />
-                        </Link>
-                    ))}
+                    {menuItems.map((item, index) => {
+                        const handleClick = () => {
+                            setActiveIndex(index);
+                            if (item.title === 'Thoát') {
+                                handleLogout();
+                                onClose();
+                            } else {
+                                onClose();
+                            }
+                        };
+
+                        return (
+                            <div key={index}>
+                                {item.title === 'Thoát' ? (
+                                    <BtnItem
+                                        icon={item.icon}
+                                        title={item.title}
+                                        isActive={activeIndex === index}
+                                        onClick={handleClick}
+                                    />
+                                ) : (
+                                    <Link to={item.to}>
+                                        <BtnItem
+                                            icon={item.icon}
+                                            title={item.title}
+                                            isActive={activeIndex === index}
+                                            onClick={handleClick}
+                                        />
+                                    </Link>
+                                )}
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
 
@@ -93,25 +115,20 @@ function Sidebar({ isOpen, onClose }) {
                 </div>
                 <div className="flex items-center mb-4">
                     <div className="mr-4">
-                        <Image className="rounded-full w-[50px] h-[50px]" src={user.avatar} />
+                        <Image className="rounded-full w-[50px] h-[50px]" src={currentData.avatard || 'dsadassa'} />
                     </div>
                     <div>
-                        <strong className="line-clamp-1 max-w-[160px]">{user.name}</strong>
-                        <p>{user.phone}</p>
+                        <strong className="line-clamp-1 max-w-[160px]">{currentData.name}</strong>
+                        <p>{currentData.phone}</p>
                     </div>
                 </div>
                 <div>
-                    <p>Mã thành viên: {user.id}</p>
-                    <p className="line-clamp-1">TK chính: {user.cash}</p>
+                    <p className="line-clamp-1">Mã thành viên: {currentData.id}</p>
+                    {/* <p className="line-clamp-1">TK chính: {currentData.roleId}</p> */}
                 </div>
             </div>
         </div>
     );
 }
-
-Sidebar.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
-};
 
 export default Sidebar;
