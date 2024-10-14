@@ -1,34 +1,31 @@
 "use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Overviews", {
+    await queryInterface.createTable("PackageServices", {
       id: {
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
+      name: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false,
+      },
+      description: {
         type: Sequelize.STRING,
       },
-      code: {
+      price: {
         type: Sequelize.STRING,
       },
-      area: {
+      star: {
+        type: Sequelize.STRING,
+        defaultValue: "0",
+      },
+      duration: {
         type: Sequelize.STRING,
       },
-      type: {
-        type: Sequelize.STRING,
-      },
-      target: {
-        type: Sequelize.STRING,
-      },
-      bonus: {
-        type: Sequelize.STRING,
-      },
-      created: {
-        type: Sequelize.DATE,
-      },
-      expired: {
-        type: Sequelize.DATE,
-      },
-
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -40,6 +37,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Overviews");
+    await queryInterface.dropTable("PackageServices");
   },
 };

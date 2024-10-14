@@ -14,32 +14,28 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "id",
         as: "images",
       });
-      Post.belongsTo(models.Attribute, {
-        foreignKey: "attributesId",
-        targetKey: "id",
-        as: "attributes",
-      });
       Post.belongsTo(models.User, {
         foreignKey: "userId",
         targetKey: "id",
         as: "user",
+      });
+      Post.hasMany(models.PostPackage, {
+        foreignKey: "postId",
+        as: "postPackages",
       });
     }
   }
   Post.init(
     {
       title: DataTypes.STRING,
-      star: DataTypes.STRING,
       labelCode: DataTypes.STRING,
       address: DataTypes.STRING,
-      attributesId: DataTypes.STRING,
       categoryCode: DataTypes.STRING,
       priceCode: DataTypes.STRING,
       areaCode: DataTypes.STRING,
       provinceCode: DataTypes.STRING,
       description: DataTypes.TEXT,
       userId: DataTypes.STRING,
-      overviewId: DataTypes.STRING,
       imagesId: DataTypes.STRING,
       priceNumber: DataTypes.FLOAT,
       areaNumber: DataTypes.FLOAT,

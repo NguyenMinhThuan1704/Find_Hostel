@@ -1,23 +1,28 @@
 "use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Attributes", {
+    await queryInterface.createTable("PostPackages", {
       id: {
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
+      postId: {
         type: Sequelize.STRING,
       },
-      price: {
-        type: Sequelize.STRING,
+      packageId: {
+        type: Sequelize.INTEGER,
       },
-      acreage: {
-        type: Sequelize.STRING,
+      startDay: {
+        type: Sequelize.DATE,
       },
-      published: {
-        type: Sequelize.STRING,
+      endDay: {
+        type: Sequelize.DATE,
       },
-      hashtag: {
-        type: Sequelize.STRING,
+      status: {
+        type: Sequelize.BOOLEAN,
+        default: false,
       },
       createdAt: {
         allowNull: false,
@@ -30,6 +35,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Attributes");
+    await queryInterface.dropTable("PostPackages");
   },
 };

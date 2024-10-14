@@ -57,3 +57,32 @@ export const apiUploadImages = (images) =>
             reject(error);
         }
     });
+
+export const apiCreatePost = (payload) =>
+    new Promise(async (resolve, reject) => {
+        try {
+            const response = await axiosConfig({
+                method: 'post',
+                url: `/api/v1/post/create-post`,
+                data: payload,
+            });
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });
+
+export const apiGetPostLimitAdmin = (query) =>
+    new Promise(async (resolve, reject) => {
+        try {
+            const response = await axiosConfig({
+                method: 'get',
+                url: `/api/v1/post/post-admin`,
+                paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'repeat' }),
+                params: query,
+            });
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });

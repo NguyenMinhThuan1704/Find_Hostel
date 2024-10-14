@@ -33,7 +33,7 @@ function NewPostItem({ data }) {
                     {renderStars(+data.star || 0)} {data.title}
                 </h3>
                 <div className="flex justify-between">
-                    <p className="text-green-600 text-[13px] font-semibold">{data.attributes.price}</p>
+                    <p className="text-green-600 text-[13px] font-semibold">{data.priceNumber} triệu đồng/tháng</p>
                     <p className="text-gray-500 text-[12px]">{formatTime(data.createdAt)}</p>
                 </div>
             </div>

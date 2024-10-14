@@ -10,17 +10,10 @@ module.exports = {
       title: {
         type: Sequelize.STRING,
       },
-      star: {
-        type: Sequelize.STRING,
-        defaultValue: "0",
-      },
       labelCode: {
         type: Sequelize.STRING,
       },
       address: {
-        type: Sequelize.STRING,
-      },
-      attributesId: {
         type: Sequelize.STRING,
       },
       categoryCode: {
@@ -39,9 +32,6 @@ module.exports = {
         type: Sequelize.TEXT,
       },
       userId: {
-        type: Sequelize.STRING,
-      },
-      overviewId: {
         type: Sequelize.STRING,
       },
       imagesId: {

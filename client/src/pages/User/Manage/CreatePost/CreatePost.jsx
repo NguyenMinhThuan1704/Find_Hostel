@@ -3,27 +3,39 @@ import Address from './Address';
 import Information from './Information';
 import { BsCameraFill } from 'react-icons/bs';
 import { ImBin } from 'react-icons/im';
-import { apiUploadImages } from 'services';
+import { ToastContainer, toast } from 'react-toastify';
+import { apiCreatePost, apiUploadImages } from 'services';
 import Loading from 'components/Loading';
 import Image from 'components/Image';
+import { getCodes, getCodesArea } from 'utils/Common/getCodes';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import config from 'config';
 
-function CreatePost() {
-    const [payload, setPayload] = useState({
-        categoryCode: '',
-        title: '',
-        priceNumber: 0,
-        areaNumber: 0,
-        images: '',
-        address: '',
-        priceCode: '',
-        areaCode: '',
-        description: '',
-        target: '',
-        province: '',
+function CreatePost({ isEdit }) {
+    const { dataEdit } = useSelector((state) => state.post);
+
+    const [payload, setPayload] = useState(() => {
+        const initData = {
+            categoryCode: dataEdit.categoryCode || '',
+            title: dataEdit.title || '',
+            priceNumber: dataEdit.priceNumber * 1000000 || 0,
+            areaNumber: dataEdit.areaNumber || 0,
+            images: dataEdit.images || '',
+            address: dataEdit.address || '',
+            priceCode: dataEdit.priceCode || '',
+            areaCode: dataEdit.areaCode || '',
+            description: dataEdit.description || '',
+            target: '',
+            province: dataEdit.province || '',
+        };
+        return initData;
     });
-
+    const navigate = useNavigate();
     const [imagesPreview, setImagesPreview] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const { prices, areas, categories } = useSelector((state) => state.app);
+    const { currentData } = useSelector((state) => state.user);
 
     const handleFiles = async (e) => {
         e.stopPropagation();
@@ -52,16 +64,45 @@ function CreatePost() {
         }));
     };
 
-    console.log(payload);
+    const handleSubmit = async () => {
+        let priceCodeArr = getCodes(+payload.priceNumber / Math.pow(10, 6), prices, 1, 15);
+        let priceCode = priceCodeArr[priceCodeArr.length - 1]?.code;
+        let areaCodeArr = getCodesArea(+payload.areaNumber, areas, 0, 90);
+        let areaCode = areaCodeArr[0]?.code;
+
+        let finalPayload = {
+            ...payload,
+            priceCode,
+            areaCode,
+            userId: currentData?.id,
+            priceNumber: +payload.priceNumber / Math.pow(10, 6),
+            label: `${categories?.find((item) => item.code === payload?.categoryCode)?.value} tại ${payload?.address?.split(',')[0]}`,
+        };
+
+        const response = await apiCreatePost(finalPayload);
+        if (response?.data.err === 0) {
+            toast.success('Yêu cầu đăng bài thành công! Vui lòng chờ xét duyệt.');
+            setTimeout(() => {
+                navigate(config.routes.postManage);
+            }, 2000);
+        } else {
+            toast.success('Yêu cầu đăng bài thất bại.');
+        }
+    };
 
     return (
         <div className="bg-white p-4">
-            <h1 className="my-0 border-b border-b-slate-400">Đăng tin mới</h1>
-            <div className="my-6 bg-[#f8d7da] border border-solid border-[#f5c6cb] px-8 py-4">
-                Nếu bạn đã từng đăng tin trên Phongtro123.com, hãy sử dụng chức năng ĐẨY TIN / GIA HẠN / NÂNG CẤP VIP
-                trong mục QUẢN LÝ TIN ĐĂNG để làm mới, đẩy tin lên cao thay vì đăng tin mới. Tin đăng trùng nhau sẽ
-                không được duyệt.
-            </div>
+            <ToastContainer />
+            <h1 className="my-0 border-b border-b-slate-400 mb-6">{isEdit ? 'Chỉnh sửa tin đăng' : 'Đăng tin mới'}</h1>
+            {isEdit ? (
+                <></>
+            ) : (
+                <div className="my-6 bg-[#f8d7da] border border-solid border-[#f5c6cb] px-8 py-4">
+                    Nếu bạn đã từng đăng tin trên Phongtro123.com, hãy sử dụng chức năng ĐẨY TIN / GIA HẠN / NÂNG CẤP
+                    VIP trong mục QUẢN LÝ TIN ĐĂNG để làm mới, đẩy tin lên cao thay vì đăng tin mới. Tin đăng trùng nhau
+                    sẽ không được duyệt.
+                </div>
+            )}
             <div className="flex gap-8">
                 <div className="flex flex-col gap-8 w-[70%]">
                     <Address setPayload={setPayload} />
@@ -97,7 +138,7 @@ function CreatePost() {
                                                 <Image
                                                     src={item}
                                                     alt="preview"
-                                                    className="w-full h-full object-none rounded-3xl shadow-md"
+                                                    className="w-full h-full rounded-3xl shadow-md"
                                                 />
                                                 <span
                                                     title="Xóa"
@@ -113,7 +154,10 @@ function CreatePost() {
                             </div>
                         </div>
                     </div>
-                    <div className="h-[500px]"></div>
+                    <button onClick={handleSubmit} className="bg-blue-500 text-white p-4 rounded-md hover:bg-blue-600">
+                        Tạo mới
+                    </button>
+                    <div className="h-[20px]"></div>
                 </div>
 
                 <div className="w-[30%]">Map</div>

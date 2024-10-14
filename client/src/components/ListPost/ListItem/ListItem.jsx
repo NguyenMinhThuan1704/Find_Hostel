@@ -36,22 +36,22 @@ function ListItem({ post }) {
                         <div className="absolute left-[16px] bottom-[20px] text-white px-2 bg-overlay-30">
                             {img.length} ảnh
                         </div>
-                        <div
-                            onMouseEnter={() => setIsHovered(true)}
-                            onMouseLeave={() => setIsHovered(false)}
-                            onClick={handleClick}
-                            className="absolute right-[20px] bottom-[16px] text-[24px] cursor-pointer"
-                            title="Lưu tin này"
-                        >
-                            {isClicked ? (
-                                <FontAwesomeIcon className="text-red-500" icon={SolidHeart} />
-                            ) : isHovered ? (
-                                <FontAwesomeIcon className="text-red-500" icon={SolidHeart} />
-                            ) : (
-                                <FontAwesomeIcon className="text-zinc-400" icon={faHeart} />
-                            )}
-                        </div>
                     </Link>
+                    <div
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
+                        onClick={handleClick}
+                        className="absolute right-[30px] bottom-[16px] text-[24px] cursor-pointer"
+                        title="Lưu tin này"
+                    >
+                        {isClicked ? (
+                            <FontAwesomeIcon className="text-red-500" icon={SolidHeart} />
+                        ) : isHovered ? (
+                            <FontAwesomeIcon className="text-red-500" icon={SolidHeart} />
+                        ) : (
+                            <FontAwesomeIcon className="text-zinc-400" icon={faHeart} />
+                        )}
+                    </div>
                 </div>
                 <div className="w-3/5 py-3">
                     <Link to={`chi-tiet/${formatVietnameseToString(post.title)}/${post.id}`}>
@@ -60,14 +60,14 @@ function ListItem({ post }) {
                         </div>
                     </Link>
                     <div className="flex h-[20px] justify-between my-4">
-                        <p className="w-[25%] font-bold text-green-500">{post.attributes.price}</p>
-                        <p className="w-[25%]">{post.attributes.acreage}</p>
+                        <p className="w-[35%] font-bold text-green-500">{post.priceNumber} triệu đồng/tháng</p>
+                        <p className="w-[15%]">{post.areaNumber} m2</p>
                         <p className="w-1/2 line-clamp-1 hover:underline" title={post.address}>
                             <Link>{`${post.address.split(',')[post.address.split(',').length - 2]},${post.address.split(',')[post.address.split(',').length - 1]}`}</Link>
                         </p>
                     </div>
                     <div className="flex justify-end mr-4 my-4">
-                        <p>{post.attributes.published}</p>
+                        <p>{post.createdAt}</p>
                     </div>
                     <div>
                         <p className="line-clamp-2 text-[14px] text-[#8a8d91]">{des}</p>

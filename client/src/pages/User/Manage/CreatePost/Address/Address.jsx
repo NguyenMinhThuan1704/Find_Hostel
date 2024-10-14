@@ -1,15 +1,40 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import Select from './Select';
 import { apiGetPublicDistrict, apiGetPublicProvinces, apiGetPublicWard } from 'services';
-
+import { useSelector } from 'react-redux';
 function Address({ setPayload }) {
+    const { dataEdit } = useSelector((state) => state.post);
     const [provinces, setProvinces] = useState([]);
     const [districts, setDistricts] = useState([]);
     const [wards, setWards] = useState([]);
     const [province, setProvince] = useState('');
+
     const [district, setDistrict] = useState('');
     const [ward, setWard] = useState('');
     const [reset, setReset] = useState(false);
+    console.log(provinces);
+
+    useEffect(() => {
+        let addressArr = dataEdit?.address?.split(',');
+        let foundProvince =
+            provinces.length > 0 && provinces?.find((item) => item.name === addressArr[addressArr.length - 1]?.trim());
+        setProvince(foundProvince ? foundProvince.id : '');
+    }, [provinces]);
+
+    useEffect(() => {
+        let addressArr = dataEdit?.address?.split(',');
+        let foundProvince =
+            districts.length > 0 && districts?.find((item) => item.name === addressArr[addressArr.length - 2]?.trim());
+        setDistrict(foundProvince ? foundProvince.id : '');
+    }, [districts]);
+
+    useEffect(() => {
+        let addressArr = dataEdit?.address?.split(',');
+        let foundProvince =
+            wards.length > 0 && wards?.find((item) => item.name === addressArr[addressArr.length - 3]?.trim());
+        setWard(foundProvince ? foundProvince.id : '');
+    }, [wards]);
 
     useEffect(() => {
         const fetchPublicProvince = async () => {
@@ -52,7 +77,7 @@ function Address({ setPayload }) {
         setPayload((prev) => ({
             ...prev,
             address: `${ward ? `${wards?.find((item) => item.id === ward)?.name}, ` : ''}${district ? `${districts?.find((item) => item.id === district)?.name}, ` : ''}${province ? provinces?.find((item) => item.id === province)?.name : ''}`,
-            province: province ? provinces?.find((item) => item.province_id === province)?.province_name : '',
+            province: `${province ? provinces?.find((item) => item.id === province)?.name : ''}`,
         }));
     }, [province, district, setPayload, districts, provinces, ward, wards]);
 
@@ -63,7 +88,7 @@ function Address({ setPayload }) {
                 <div className="flex items-center gap-4">
                     <Select
                         type="province"
-                        value={province}
+                        value={province || ''}
                         setValue={setProvince}
                         options={provinces}
                         label="Tỉnh/Thành phố"
@@ -71,7 +96,7 @@ function Address({ setPayload }) {
                     <Select
                         reset={reset}
                         type="district"
-                        value={district}
+                        value={district || ''}
                         setValue={setDistrict}
                         options={districts}
                         label="Quận/Huyện"
@@ -79,7 +104,7 @@ function Address({ setPayload }) {
                     <Select
                         reset={reset}
                         type="ward"
-                        value={ward}
+                        value={ward || ''}
                         setValue={setWard}
                         options={wards}
                         label="Xã/Phường"

@@ -56,10 +56,10 @@ export const insertService = () =>
               code: provinceCode,
               value: item?.header?.address?.split(",")?.slice(-1)[0].trim(),
             });
-          let attributesId = v4();
+
           let userId = v4();
           let imagesId = v4();
-          let overviewId = v4();
+
           let desc = JSON.stringify(item?.mainContent?.content);
           let currentArea = getNumberFromString(
             item?.header?.attributes?.acreage
@@ -76,14 +76,11 @@ export const insertService = () =>
           await db.Post.create({
             id: postId,
             title: item?.header?.title,
-            star: item?.header?.star,
             labelCode,
             address: item?.header?.address,
-            attributesId,
             categoryCode: cate.code,
             description: desc,
             userId,
-            overviewId,
             imagesId,
             areaCode: dataArea.find(
               (area) => area.max > currentArea && area.min <= currentArea
@@ -97,34 +94,19 @@ export const insertService = () =>
               item?.header?.attributes?.acreage
             ),
           });
-          await db.Attribute.create({
-            id: attributesId,
-            price: item?.header?.attributes?.price,
-            acreage: item?.header?.attributes?.acreage,
-            published: item?.header?.attributes?.published,
-            hashtag: item?.header?.attributes?.hashtag,
+          await db.PostPackage.create({
+            postId: postId,
+            packageId: "1",
+            startDay: createdFormatted,
+            endDay: expiredFormatted,
+            status: true,
           });
+
           await db.Image.create({
             id: imagesId,
             image: JSON.stringify(item?.images),
           });
-          await db.Overview.create({
-            id: overviewId,
-            code: item?.overview?.content.find((i) => i.name === "Mã tin:")
-              ?.content,
-            area: item?.overview?.content.find((i) => i.name === "Khu vực")
-              ?.content,
-            type: item?.overview?.content.find(
-              (i) => i.name === "Loại tin rao:"
-            )?.content,
-            target: item?.overview?.content.find(
-              (i) => i.name === "Đối tượng thuê:"
-            )?.content,
-            bonus: item?.overview?.content.find((i) => i.name === "Gói tin:")
-              ?.content,
-            created: createdFormatted,
-            expired: expiredFormatted,
-          });
+
           await db.User.findOrCreate({
             where: {
               phone: item?.contact?.content.find(

@@ -9,7 +9,7 @@ import { useSearchParams } from 'react-router-dom';
 const Pagination = ({ page }) => {
     const { count } = useSelector((state) => state.post);
     const [arrPage, setArrPage] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(+page);
     const [isHideEnd, setIsHideEnd] = useState(false);
     const [isHideStart, setIsHideStart] = useState(false);
     const [searchParams] = useSearchParams();

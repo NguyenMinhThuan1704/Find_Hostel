@@ -42,7 +42,7 @@ function Home() {
             <div className="w-full flex gap-4">
                 <div className="w-2/3">
                     <ListPost page={page} />
-                    <Pagination page={1 || 0} />
+                    <Pagination page={1} />
                 </div>
                 <div className="w-1/3">
                     <Sidebar />
