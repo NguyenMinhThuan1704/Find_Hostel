@@ -29,11 +29,17 @@ const postReducer = (state = initState, action) => {
                 ...state,
                 msg: action.msg || '',
                 postOfCrr: action.posts || [],
+                count: action.count || 0,
             };
         case actionTypes.EDIT_DATA:
             return {
                 ...state,
-                dataEdit: action.dataEdit || [],
+                dataEdit: action.dataEdit || null,
+            };
+        case actionTypes.RESET_DATA_EDIT:
+            return {
+                ...state,
+                dataEdit: null,
             };
         default:
             return state;

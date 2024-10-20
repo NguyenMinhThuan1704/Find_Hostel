@@ -101,7 +101,7 @@ function Header() {
                     <>
                         <Menu items={userMenu}>
                             <Image
-                                src=""
+                                src={currentData.avatar}
                                 className={cx(
                                     'user-avatar',
                                     'w-[32px]',

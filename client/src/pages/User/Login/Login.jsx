@@ -36,7 +36,7 @@ function Login() {
                 toast.success('Đăng nhập thành công');
                 setTimeout(() => {
                     navigate(config.routes.home);
-                }, 1000);
+                }, 2000);
             } else {
                 toast.error(`Đăng nhập thất bại: ${msg}`);
             }

@@ -13,28 +13,35 @@ function Address({ setPayload }) {
     const [district, setDistrict] = useState('');
     const [ward, setWard] = useState('');
     const [reset, setReset] = useState(false);
-    console.log(provinces);
 
     useEffect(() => {
-        let addressArr = dataEdit?.address?.split(',');
-        let foundProvince =
-            provinces.length > 0 && provinces?.find((item) => item.name === addressArr[addressArr.length - 1]?.trim());
-        setProvince(foundProvince ? foundProvince.id : '');
-    }, [provinces]);
+        if (dataEdit) {
+            let addressArr = dataEdit?.address?.split(',');
+            let foundProvince =
+                provinces.length > 0 &&
+                provinces?.find((item) => item.name === addressArr[addressArr.length - 1]?.trim());
+            setProvince(foundProvince ? foundProvince.id : '');
+        }
+    }, [provinces, dataEdit]);
 
     useEffect(() => {
-        let addressArr = dataEdit?.address?.split(',');
-        let foundProvince =
-            districts.length > 0 && districts?.find((item) => item.name === addressArr[addressArr.length - 2]?.trim());
-        setDistrict(foundProvince ? foundProvince.id : '');
-    }, [districts]);
+        if (dataEdit) {
+            let addressArr = dataEdit?.address?.split(',');
+            let foundProvince =
+                districts.length > 0 &&
+                districts?.find((item) => item.name === addressArr[addressArr.length - 2]?.trim());
+            setDistrict(foundProvince ? foundProvince.id : '');
+        }
+    }, [districts, dataEdit]);
 
     useEffect(() => {
-        let addressArr = dataEdit?.address?.split(',');
-        let foundProvince =
-            wards.length > 0 && wards?.find((item) => item.name === addressArr[addressArr.length - 3]?.trim());
-        setWard(foundProvince ? foundProvince.id : '');
-    }, [wards]);
+        if (dataEdit) {
+            let addressArr = dataEdit?.address?.split(',');
+            let foundProvince =
+                wards.length > 0 && wards?.find((item) => item.name === addressArr[addressArr.length - 3]?.trim());
+            setWard(foundProvince ? foundProvince.id : '');
+        }
+    }, [wards, dataEdit]);
 
     useEffect(() => {
         const fetchPublicProvince = async () => {

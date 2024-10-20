@@ -1,0 +1,35 @@
+.slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+.prominent__item {
+    width: 100%;
+
+    .prominent__item--img {
+        height: 280px;
+        width: 100%;
+        object-fit: contain;
+        transition: transform 0.6s ease;
+        overflow: hidden;
+    }
+
+    .prominent__item--title {
+        line-height: 2.6rem;
+        display: grid;
+        margin: 10px 0;
+        text-align: center;
+    }
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    color: #a7714e;
+    display: flex;
+    align-items: center;
+    font-size: 40px;
+    cursor: pointer;
+    background-color: black;
+}

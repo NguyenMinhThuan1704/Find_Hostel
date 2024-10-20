@@ -11,7 +11,7 @@ function UpdatePost({ setIsEdit }) {
             }}
         >
             <div
-                className="bg-white w-3/4 overflow-y-auto p-6 pt-[930px]"
+                className="bg-white w-3/4 overflow-y-auto p-6 pt-[1060px]"
                 onClick={(e) => {
                     e.stopPropagation();
                 }}

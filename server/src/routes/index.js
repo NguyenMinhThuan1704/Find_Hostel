@@ -5,6 +5,7 @@ import postRouter from "./post";
 import priceRouter from "./price";
 import areaRouter from "./area";
 import userRouter from "./user";
+import contactRouter from "./contact";
 
 const initRoutes = (app) => {
   app.use("/api/v1/auth", authRouter);
@@ -14,6 +15,7 @@ const initRoutes = (app) => {
   app.use("/api/v1/price", priceRouter);
   app.use("/api/v1/area", areaRouter);
   app.use("/api/v1/user", userRouter);
+  app.use("/api/v1/contact", contactRouter);
 
   return app.use("/", (req, res) => {
     console.log("server onl");

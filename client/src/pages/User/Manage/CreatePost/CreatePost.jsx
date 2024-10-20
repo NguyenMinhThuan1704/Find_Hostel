@@ -1,41 +1,50 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Address from './Address';
 import Information from './Information';
 import { BsCameraFill } from 'react-icons/bs';
 import { ImBin } from 'react-icons/im';
 import { ToastContainer, toast } from 'react-toastify';
-import { apiCreatePost, apiUploadImages } from 'services';
+import { apiCreatePost, apiUpdatePost, apiUploadImages } from 'services';
 import Loading from 'components/Loading';
 import Image from 'components/Image';
-import { getCodes, getCodesArea } from 'utils/Common/getCodes';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { getCodes, getCodesArea } from 'utils/Common/getCodes';
+import { useSelector, useDispatch } from 'react-redux';
+import { resetData } from 'store/actions';
 import config from 'config';
 
 function CreatePost({ isEdit }) {
     const { dataEdit } = useSelector((state) => state.post);
+    const dispatch = useDispatch();
 
     const [payload, setPayload] = useState(() => {
         const initData = {
-            categoryCode: dataEdit.categoryCode || '',
-            title: dataEdit.title || '',
-            priceNumber: dataEdit.priceNumber * 1000000 || 0,
-            areaNumber: dataEdit.areaNumber || 0,
-            images: dataEdit.images || '',
-            address: dataEdit.address || '',
-            priceCode: dataEdit.priceCode || '',
-            areaCode: dataEdit.areaCode || '',
-            description: dataEdit.description || '',
+            categoryCode: dataEdit?.categoryCode || '',
+            title: dataEdit?.title || '',
+            priceNumber: dataEdit?.priceNumber * 1000000 || 0,
+            areaNumber: dataEdit?.areaNumber || 0,
+            images: dataEdit?.images?.image ? JSON.parse(dataEdit?.images?.image) : '',
+            address: dataEdit?.address || '',
+            priceCode: dataEdit?.priceCode || '',
+            areaCode: dataEdit?.areaCode || '',
+            description: dataEdit?.description ? JSON.parse(dataEdit?.description) : '',
             target: '',
-            province: dataEdit.province || '',
+            province: dataEdit?.province || '',
         };
         return initData;
     });
-    const navigate = useNavigate();
     const [imagesPreview, setImagesPreview] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { prices, areas, categories } = useSelector((state) => state.app);
     const { currentData } = useSelector((state) => state.user);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (dataEdit) {
+            let images = JSON.parse(dataEdit?.images?.image);
+            images && setImagesPreview(images);
+        }
+    }, [dataEdit]);
 
     const handleFiles = async (e) => {
         e.stopPropagation();
@@ -79,15 +88,45 @@ function CreatePost({ isEdit }) {
             label: `${categories?.find((item) => item.code === payload?.categoryCode)?.value} tại ${payload?.address?.split(',')[0]}`,
         };
 
-        const response = await apiCreatePost(finalPayload);
-        if (response?.data.err === 0) {
-            toast.success('Yêu cầu đăng bài thành công! Vui lòng chờ xét duyệt.');
-            setTimeout(() => {
-                navigate(config.routes.postManage);
-            }, 2000);
+        if (dataEdit && isEdit) {
+            finalPayload.postId = dataEdit?.id;
+            finalPayload.imagesId = dataEdit?.imagesId;
+            finalPayload.postPackagesId = dataEdit?.postPackages?.id;
+
+            const response = await apiUpdatePost(finalPayload);
+
+            if (response?.data.err === 0) {
+                resetPayload();
+                dispatch(resetData());
+            }
         } else {
-            toast.success('Yêu cầu đăng bài thất bại.');
+            const response = await apiCreatePost(finalPayload);
+            if (response?.data.err === 0) {
+                toast.success('Yêu cầu đăng bài thành công! Vui lòng chờ xét duyệt.');
+                resetPayload();
+                setTimeout(() => {
+                    navigate(config.routes.postManage);
+                }, 2000);
+            } else {
+                toast.error('Yêu cầu đăng bài thất bại.');
+            }
         }
+    };
+
+    const resetPayload = () => {
+        setPayload({
+            categoryCode: '',
+            title: '',
+            priceNumber: 0,
+            areaNumber: 0,
+            images: '',
+            address: '',
+            priceCode: '',
+            areaCode: '',
+            description: '',
+            target: '',
+            province: '',
+        });
     };
 
     return (
@@ -155,7 +194,7 @@ function CreatePost({ isEdit }) {
                         </div>
                     </div>
                     <button onClick={handleSubmit} className="bg-blue-500 text-white p-4 rounded-md hover:bg-blue-600">
-                        Tạo mới
+                        {isEdit ? 'Cập nhật' : 'Tạo mới'}
                     </button>
                     <div className="h-[20px]"></div>
                 </div>

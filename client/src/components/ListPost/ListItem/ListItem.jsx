@@ -31,7 +31,7 @@ function ListItem({ post }) {
         <div className="p-4 bg-[#fff9f3] border border-solid border-[#E13427] border-x-0 max-h-[265px]">
             <div className="flex">
                 <div className="w-2/5 relative">
-                    <Link to={`chi-tiet/${formatVietnameseToString(post.title)}/${post.id}`}>
+                    <Link to={`chi-tiet/${formatVietnameseToString(post.title?.replaceAll('/', ''))}/${post.id}`}>
                         <Image className="w-[280px] h-[240px] p-4 object-cover rounded-3xl" src={img[0]} />
                         <div className="absolute left-[16px] bottom-[20px] text-white px-2 bg-overlay-30">
                             {img.length} ảnh
@@ -54,7 +54,7 @@ function ListItem({ post }) {
                     </div>
                 </div>
                 <div className="w-3/5 py-3">
-                    <Link to={`chi-tiet/${formatVietnameseToString(post.title)}/${post.id}`}>
+                    <Link to={`chi-tiet/${formatVietnameseToString(post.title?.replaceAll('/', ''))}/${post.id}`}>
                         <div className="text-red-500 line-clamp-2 hover:underline">
                             {renderStars(+post.star || 0)} {post.title}
                         </div>

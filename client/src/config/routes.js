@@ -12,6 +12,7 @@ const routes = {
     listPrice: '/bang-gia-dich-vu',
     search: 'tim-kiem',
     detailPost: '/chi-tiet/:title/:postId',
+    detailPostAll: '/chi-tiet/*',
 
     profile: '/he-thong/tai-khoan',
     postManage: '/he-thong/tin-dang',

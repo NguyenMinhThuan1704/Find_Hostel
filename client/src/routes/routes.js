@@ -39,6 +39,7 @@ const publicRoutes = [
     { path: config.routes.news, component: News },
     { path: config.routes.listPrice, component: ListPrice },
     { path: config.routes.detailPost, component: DetailPost },
+    { path: config.routes.detailPostAll, component: DetailPost },
     { path: config.routes.search, component: Search },
 
     { path: config.routes.profile, component: AccountManagement, layout: AccountLayout },

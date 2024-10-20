@@ -21,8 +21,8 @@ import { useDispatch, useSelector } from 'react-redux';
 const cx = classNames.bind(styles);
 
 const menuItems = [
-    { to: `${config.routes.profile}`, icon: faUser, title: 'Thông tin cá nhân' },
     { to: `${config.routes.postManage}`, icon: faClipboardList, title: 'Quản lý bài đăng' },
+    { to: `${config.routes.profile}`, icon: faUser, title: 'Thông tin cá nhân' },
     { to: `${config.routes.profile}`, icon: faCreditCard, title: 'Nạp tiền' },
     { to: `${config.routes.rechargeHistory}`, icon: faCommentDollar, title: 'Lịch sử nạp tiền' },
     { to: `${config.routes.paymentHistory}`, icon: faClockRotateLeft, title: 'Lịch sử thanh toán' },
@@ -115,7 +115,7 @@ function Sidebar({ isOpen, onClose }) {
                 </div>
                 <div className="flex items-center mb-4">
                     <div className="mr-4">
-                        <Image className="rounded-full w-[50px] h-[50px]" src={currentData.avatard || 'dsadassa'} />
+                        <Image className="rounded-full w-[50px] h-[50px]" src={currentData.avatar || 'dsadassa'} />
                     </div>
                     <div>
                         <strong className="line-clamp-1 max-w-[160px]">{currentData.name}</strong>
