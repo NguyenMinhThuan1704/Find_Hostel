@@ -8,6 +8,7 @@ const routes = {
     rentalRoom: `/cho-thue-phong-tro`,
     rentalHouse: `/nha-cho-thue`,
     rentalSpace: `/cho-thue-mat-bang`,
+    findRoommate: `/tim-nguoi-o-ghep`,
     news: `/tin-tuc`,
     listPrice: '/bang-gia-dich-vu',
     search: 'tim-kiem',
@@ -21,6 +22,10 @@ const routes = {
     paymentHistory: '/he-thong/lich-su-thanh-toan',
     contact: '/he-thong/lien-he',
     recharge: '/he-thong/nap-tien',
+
+    dashBoard: '/quan-tri/bang-dieu-huong',
+    postManagement: '/quan-tri/quan-ly-tin-dang',
+    typePostManagement: '/quan-tri/quan-ly-loai-tin-dang',
 };
 
 export default routes;

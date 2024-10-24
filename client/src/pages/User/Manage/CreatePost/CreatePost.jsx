@@ -41,7 +41,7 @@ function CreatePost({ isEdit }) {
 
     useEffect(() => {
         if (dataEdit) {
-            let images = JSON.parse(dataEdit?.images?.image);
+            let images = dataEdit?.images?.image ? JSON.parse(dataEdit?.images?.image) : [];
             images && setImagesPreview(images);
         }
     }, [dataEdit]);

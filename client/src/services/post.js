@@ -31,12 +31,13 @@ export const apiGetPostLimit = (query) =>
         }
     });
 
-export const apiGetNewPosts = () =>
+export const apiGetNewPosts = (orderBy = 'createdAt') =>
     new Promise(async (resolve, reject) => {
         try {
             const response = await axiosConfig({
                 method: 'get',
                 url: `/api/v1/post/new-post`,
+                params: { orderBy },
             });
             resolve(response);
         } catch (error) {

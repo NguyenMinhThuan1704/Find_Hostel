@@ -83,6 +83,13 @@ export const getPostsLimitService = (
             model: db.PostPackage,
             as: "postPackages",
             attributes: ["id", "packageId", "startDay", "endDay", "status"],
+            include: [
+              {
+                model: db.PackageService,
+                as: "packageService",
+                attributes: ["star"],
+              },
+            ],
           },
         ],
         attributes: [
@@ -105,38 +112,45 @@ export const getPostsLimitService = (
     }
   });
 
-export const getNewPostService = () =>
-  new Promise(async (resolve, reject) => {
-    try {
-      const response = await db.Post.findAll({
-        raw: true,
-        nest: true,
-        offset: 0,
-        order: [["createdAt", "DESC"]],
-        limit: 10,
-        include: [
-          { model: db.Image, as: "images", attributes: ["image"] },
-          { model: db.User, as: "user", attributes: ["name", "zalo", "phone"] },
-        ],
-        attributes: [
-          "id",
-          "title",
-          "address",
-          "description",
-          "priceNumber",
-          "areaNumber",
-          "createdAt",
-        ],
-      });
-      resolve({
-        err: response ? 0 : 1,
-        msg: response ? "Ok" : "Failed to find all post",
-        response,
-      });
-    } catch (error) {
-      reject();
+export const getNewPostService = async ({ orderBy = "createdAt" } = {}) => {
+  try {
+    let query = `
+        SELECT Posts.*, PackageServices.star, Images.image
+        FROM Posts
+        JOIN PostPackages ON Posts.id = PostPackages.postId
+        JOIN PackageServices ON PostPackages.packageId = PackageServices.id
+        LEFT JOIN Images ON Posts.imagesId = Images.id
+        ORDER BY PackageServices.star DESC
+        LIMIT 10
+      `;
+
+    if (orderBy === "createdAt") {
+      query = `
+          SELECT Posts.*, PackageServices.star, Images.image
+          FROM Posts
+          JOIN PostPackages ON Posts.id = PostPackages.postId
+          JOIN PackageServices ON PostPackages.packageId = PackageServices.id
+          LEFT JOIN Images ON Posts.imagesId = Images.id
+          ORDER BY Posts.createdAt DESC
+          LIMIT 10
+        `;
     }
-  });
+
+    const response = await db.sequelize.query(query, {
+      type: db.sequelize.QueryTypes.SELECT,
+      raw: true,
+    });
+
+    return {
+      err: response.length ? 0 : 1,
+      msg: response.length ? "Ok" : "Failed to find all posts",
+      response,
+    };
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    throw error;
+  }
+};
 
 export const createNewPostService = (body, userId) =>
   new Promise(async (resolve, reject) => {

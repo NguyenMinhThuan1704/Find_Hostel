@@ -33,12 +33,17 @@ export const getPostsLimit = async (req, res) => {
 
 export const getNewPost = async (req, res) => {
   try {
-    const response = await PostService.getNewPostService();
+    const { orderBy } = req.query;
+
+    const response = await PostService.getNewPostService({
+      orderBy,
+    });
+
     return res.status(200).json(response);
   } catch (error) {
     return res.status(500).json({
       err: -1,
-      msg: "Failed to get all post controller" + error,
+      msg: "Failed to get all post controller: " + error,
     });
   }
 };

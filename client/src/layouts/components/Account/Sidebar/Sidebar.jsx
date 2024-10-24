@@ -1,18 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
 import Image from 'components/Image';
 import img from 'assets/img';
 import BtnItem from './BtnItem';
-import {
-    faUser,
-    faArrowRightToBracket,
-    faClipboardList,
-    faCreditCard,
-    faCommentDollar,
-    faClockRotateLeft,
-    faComment,
-} from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import config from 'config';
 import * as actions from 'store/actions';
@@ -20,17 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
-const menuItems = [
-    { to: `${config.routes.postManage}`, icon: faClipboardList, title: 'Quản lý bài đăng' },
-    { to: `${config.routes.profile}`, icon: faUser, title: 'Thông tin cá nhân' },
-    { to: `${config.routes.profile}`, icon: faCreditCard, title: 'Nạp tiền' },
-    { to: `${config.routes.rechargeHistory}`, icon: faCommentDollar, title: 'Lịch sử nạp tiền' },
-    { to: `${config.routes.paymentHistory}`, icon: faClockRotateLeft, title: 'Lịch sử thanh toán' },
-    { to: `${config.routes.contact}`, icon: faComment, title: 'Liên hệ' },
-    { to: `${config.routes.logout}`, icon: faArrowRightToBracket, title: 'Thoát' },
-];
-
-function Sidebar({ isOpen, onClose }) {
+function Sidebar({ isOpen, onClose, menuItems }) {
     const dispatch = useDispatch();
     const location = useLocation();
     const navigate = useNavigate();
@@ -80,20 +62,34 @@ function Sidebar({ isOpen, onClose }) {
                         return (
                             <div key={index}>
                                 {item.title === 'Thoát' ? (
-                                    <BtnItem
-                                        icon={item.icon}
-                                        title={item.title}
-                                        isActive={activeIndex === index}
+                                    <div
                                         onClick={handleClick}
-                                    />
-                                ) : (
-                                    <Link to={item.to}>
+                                        className={cx('item', {
+                                            btn__active: activeIndex === index,
+                                        })}
+                                    >
                                         <BtnItem
                                             icon={item.icon}
                                             title={item.title}
                                             isActive={activeIndex === index}
                                             onClick={handleClick}
                                         />
+                                    </div>
+                                ) : (
+                                    <Link to={item.to}>
+                                        <div
+                                            onClick={handleClick}
+                                            className={cx('item', {
+                                                btn__active: activeIndex === index,
+                                            })}
+                                        >
+                                            <BtnItem
+                                                icon={item.icon}
+                                                title={item.title}
+                                                isActive={activeIndex === index}
+                                                onClick={handleClick}
+                                            />
+                                        </div>
                                     </Link>
                                 )}
                             </div>
@@ -103,7 +99,7 @@ function Sidebar({ isOpen, onClose }) {
             </div>
 
             <div>
-                <div className="flex justify-between p-8">
+                <div className="flex justify-between mb-4">
                     <Link>
                         <button className="p-4 rounded-lg bg-yellow-400 hover:bg-yellow-600 text-black">
                             Nạp tiền
@@ -124,7 +120,6 @@ function Sidebar({ isOpen, onClose }) {
                 </div>
                 <div>
                     <p className="line-clamp-1">Mã thành viên: {currentData.id}</p>
-                    {/* <p className="line-clamp-1">TK chính: {currentData.roleId}</p> */}
                 </div>
             </div>
         </div>

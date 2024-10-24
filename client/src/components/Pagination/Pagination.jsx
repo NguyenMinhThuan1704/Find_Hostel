@@ -6,10 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { useSearchParams } from 'react-router-dom';
 
-const Pagination = ({ page }) => {
+const Pagination = ({ counts, page }) => {
     const { count } = useSelector((state) => state.post);
     const [arrPage, setArrPage] = useState([]);
-    const [currentPage, setCurrentPage] = useState(+page);
+    const [currentPage, setCurrentPage] = useState(+page || 1);
     const [isHideEnd, setIsHideEnd] = useState(false);
     const [isHideStart, setIsHideStart] = useState(false);
     const [searchParams] = useSearchParams();
@@ -34,7 +34,7 @@ const Pagination = ({ page }) => {
 
     const limitPosts = process.env.REACT_APP_LIMIT_POST || 5;
 
-    let maxPage = Math.ceil(count / limitPosts);
+    let maxPage = Math.ceil(counts / limitPosts || count / limitPosts);
     useEffect(() => {
         if (currentPage > maxPage) {
             setCurrentPage(maxPage);
@@ -49,7 +49,7 @@ const Pagination = ({ page }) => {
         setArrPage(temp);
         setIsHideEnd(currentPage >= maxPage - 2);
         setIsHideStart(currentPage <= 3);
-    }, [count, currentPage]);
+    }, [counts, count, currentPage]);
 
     return (
         <div className="flex items-center justify-center gap-2 py-5">

@@ -1,3 +1,5 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
 @import 'tailwindcss/base';
 /* @import "tailwindcss/components"; */
 @import 'tailwindcss/utilities';
@@ -80,4 +82,26 @@ input[type='range']::-ms-thumb:active {
         -webkit-transform: translateX(100px);
         transform: translateX(100px);
     }
+}
+
+.modal-title {
+    font-size: 2rem;
+}
+
+.modal-body {
+    font-size: 1.6rem;
+}
+
+.form-control {
+    font-size: 1.6rem;
+    padding: 6px;
+}
+
+.form-label {
+    font-size: 1.6rem;
+}
+
+.modal-footer .btn {
+    font-size: 1.6rem;
+    padding: 6px 10px;
 }

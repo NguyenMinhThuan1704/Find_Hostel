@@ -63,7 +63,7 @@ function Login() {
                                     id="phone"
                                     name="phone"
                                     type="text"
-                                    className="shadow appearance-none border rounded w-full bg-[#e8f0fe] p-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="shadow appearance-none border rounded w-full bg-[#e8f0fe] p-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                                 />
                                 <ErrorMessage name="phone" component="div" className="text-red-600" />
                             </div>
@@ -75,7 +75,7 @@ function Login() {
                                     id="password"
                                     name="password"
                                     type="password"
-                                    className="shadow appearance-none border rounded w-full bg-[#e8f0fe] p-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="shadow appearance-none border rounded w-full bg-[#e8f0fe] p-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                                 />
                                 <ErrorMessage name="password" component="div" className="text-red-600" />
                             </div>

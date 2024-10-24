@@ -46,28 +46,31 @@ export const getPostsLimit = (query) => async (dispatch) => {
     }
 };
 
-export const getNewPosts = () => async (dispatch) => {
-    try {
-        const response = await apiGetNewPosts();
-        if (response?.data.err === 0) {
+export const getNewPosts =
+    (orderBy = 'createdAt') =>
+    async (dispatch) => {
+        try {
+            const response = await apiGetNewPosts(orderBy);
+
+            if (response?.data.err === 0) {
+                dispatch({
+                    type: actionTypes.GET_NEW_POST,
+                    newPosts: response.data.response,
+                });
+            } else {
+                dispatch({
+                    type: actionTypes.GET_NEW_POST,
+                    msg: response.data.msg,
+                    newPosts: null,
+                });
+            }
+        } catch (error) {
             dispatch({
                 type: actionTypes.GET_NEW_POST,
-                newPosts: response.data.response,
-            });
-        } else {
-            dispatch({
-                type: actionTypes.GET_NEW_POST,
-                msg: response.data.msg,
                 newPosts: null,
             });
         }
-    } catch (error) {
-        dispatch({
-            type: actionTypes.GET_NEW_POST,
-            newPosts: null,
-        });
-    }
-};
+    };
 
 export const getPostsLimitAdmin = (query) => async (dispatch) => {
     try {

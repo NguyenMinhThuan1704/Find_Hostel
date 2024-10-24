@@ -5,14 +5,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPostsLimit } from 'store/actions';
 import SlideSwiper from './Swiper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartArea, faHeart, faLocationDot, faPhone, faSackDollar } from '@fortawesome/free-solid-svg-icons';
+import {
+    faAngleRight,
+    faChartArea,
+    faHeart,
+    faLocationDot,
+    faPhone,
+    faSackDollar,
+} from '@fortawesome/free-solid-svg-icons';
 import Image from 'components/Image';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
+import config from 'config';
+import NewPost from 'components/Sidebar/NewPost';
+import * as actions from 'store/actions';
 
 function DetailPost() {
     const { postId } = useParams();
     const dispatch = useDispatch();
-    const { posts } = useSelector((state) => state.post);
+    const { posts, newPosts } = useSelector((state) => state.post);
 
     useEffect(() => {
         if (postId) {
@@ -20,7 +30,19 @@ function DetailPost() {
         }
     }, [postId]);
 
-    console.log(posts);
+    useEffect(() => {
+        dispatch(actions.getNewPosts('star'));
+    }, []);
+
+    const renderStars = (num) => {
+        return Array(num)
+            .fill(0)
+            .map((_, i) => (
+                <span key={i} className="text-yellow-500">
+                    ★
+                </span>
+            ));
+    };
 
     const imagesArray = posts[0]?.images?.image ? JSON.parse(posts[0].images.image) : [];
     const descriptionArray = posts[0]?.description ? JSON.parse(posts[0].description) : [];
@@ -28,11 +50,20 @@ function DetailPost() {
     return (
         <div className="flex gap-4 mb-8">
             <div className="w-2/3 bg-white">
+                <div className="flex items-center gap-4 my-6 px-4">
+                    <Link to={config.routes.home} className="text-blue-600 underline w-[10%]">
+                        Trang chủ
+                    </Link>{' '}
+                    <FontAwesomeIcon icon={faAngleRight} /> <p className="line-clamp-1">{posts[0]?.title}</p>
+                </div>
                 <div className="flex">
                     <SlideSwiper img={imagesArray} />
                 </div>
                 <div className="p-8">
-                    <p className="text-[28px] mb-4">{posts[0]?.title}</p>
+                    <p className="text-[28px] mb-4 line-clamp-2">
+                        {' '}
+                        {renderStars(+posts[0]?.postPackages?.packageService?.star || 0)} {posts[0]?.title}
+                    </p>
                     <div className="flex gap-2 items-center mb-4">
                         <FontAwesomeIcon icon={faLocationDot} className="text-blue-600" />
                         <p>Địa chỉ: {posts[0].address}</p>
@@ -123,7 +154,10 @@ function DetailPost() {
                 <div className="bg-[#febb02]">
                     <div className="p-8 flex flex-col gap-6">
                         <div className="flex flex-col items-center gap-2">
-                            <Image src={posts[0]?.user.avatar} className="rounded-full w-[100px] h-[100px]" />
+                            <Image
+                                src={posts[0]?.user.avatar ? posts[0]?.user.avatar : 'noImage'}
+                                className="rounded-full w-[100px] h-[100px]"
+                            />
                             <p className="mt-2 font-bold text-3xl">{posts[0]?.user.name}</p>
                         </div>
                         <button className="flex px-8 py-4 gap-4 text-[22px] text-white bg-[#16c784] w-full rounded-xl items-center justify-center hover:bg-[#13bb7b]">
@@ -140,6 +174,7 @@ function DetailPost() {
                         </button>
                     </div>
                 </div>
+                <NewPost data={newPosts} title="Tin nổi bật" />
             </div>
         </div>
     );

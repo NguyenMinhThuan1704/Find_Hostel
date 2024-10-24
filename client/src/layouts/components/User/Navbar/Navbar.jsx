@@ -33,7 +33,6 @@ const Navbar = () => {
             path: `/${formatVietnameseToString(item.value)}`,
             code: item.code,
         })),
-        { title: 'Tìm người ở ghép', path: '/tim-nguoi-o-ghep', code: 'TNOG' },
         { title: 'Tin tức', path: '/tin-tuc', code: 'TT' },
         { title: 'Bảng giá dịch vụ', path: '/bang-gia-dich-vu', code: 'BGDV' },
     ];
@@ -52,7 +51,7 @@ const Navbar = () => {
         <div className="relative bg-slate-500 sm:bg-blue-600 flex justify-between px-8 sm:px-[82px]">
             {/* PC Navbar */}
             <div
-                className="hidden sm:grid gap-4 flex-1 justify-between"
+                className="hidden sm:grid gap-2 flex-1 justify-between"
                 style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(132px, 1fr))', gap: 0 }}
             >
                 {menuPcItems.map((item) => (

@@ -31,7 +31,7 @@ function ListItem({ post }) {
         <div className="p-4 bg-[#fff9f3] border border-solid border-[#E13427] border-x-0 max-h-[265px]">
             <div className="flex">
                 <div className="w-2/5 relative">
-                    <Link to={`chi-tiet/${formatVietnameseToString(post.title?.replaceAll('/', ''))}/${post.id}`}>
+                    <Link to={`/chi-tiet/${formatVietnameseToString(post.title?.replaceAll('/', ''))}/${post.id}`}>
                         <Image className="w-[280px] h-[240px] p-4 object-cover rounded-3xl" src={img[0]} />
                         <div className="absolute left-[16px] bottom-[20px] text-white px-2 bg-overlay-30">
                             {img.length} ảnh
@@ -54,9 +54,9 @@ function ListItem({ post }) {
                     </div>
                 </div>
                 <div className="w-3/5 py-3">
-                    <Link to={`chi-tiet/${formatVietnameseToString(post.title?.replaceAll('/', ''))}/${post.id}`}>
-                        <div className="text-red-500 line-clamp-2 hover:underline">
-                            {renderStars(+post.star || 0)} {post.title}
+                    <Link to={`/chi-tiet/${formatVietnameseToString(post.title?.replaceAll('/', ''))}/${post.id}`}>
+                        <div className="text-red-500 line-clamp-1 hover:underline">
+                            {renderStars(+post.postPackages.packageService.star || 0)} {post.title}
                         </div>
                     </Link>
                     <div className="flex h-[20px] justify-between my-4">
@@ -74,7 +74,10 @@ function ListItem({ post }) {
                     </div>
                     <div className="my-4 flex justify-between">
                         <div className="flex items-center w-[45%]">
-                            <Image className="w-[40px] h-[40px] rounded-full border border-solid mr-4" src="eqeqweq" />
+                            <Image
+                                className="w-[40px] h-[40px] rounded-full border border-solid mr-4"
+                                src={post?.user?.avatar || 'das'}
+                            />
                             <p className="line-clamp-1 max-w-[140px]" title={post.user.name}>
                                 {post.user.name === null ? 'No name' : post.user.name}
                             </p>

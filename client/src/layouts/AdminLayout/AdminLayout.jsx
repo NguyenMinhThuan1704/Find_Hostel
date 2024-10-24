@@ -5,23 +5,13 @@ import Sidebar from 'layouts/components/Account/Sidebar';
 import Support from 'layouts/components/User/Support';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import {
-    faUser,
-    faArrowRightToBracket,
-    faClipboardList,
-    faCreditCard,
-    faCommentDollar,
-    faClockRotateLeft,
-    faComment,
-} from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightToBracket, faClipboardList, faComment } from '@fortawesome/free-solid-svg-icons';
 import config from 'config';
 
 const menuItems = [
-    { to: `${config.routes.postManage}`, icon: faClipboardList, title: 'Quản lý bài đăng' },
-    { to: `${config.routes.profile}`, icon: faUser, title: 'Thông tin cá nhân' },
-    { to: `${config.routes.profile}`, icon: faCreditCard, title: 'Nạp tiền' },
-    { to: `${config.routes.rechargeHistory}`, icon: faCommentDollar, title: 'Lịch sử nạp tiền' },
-    { to: `${config.routes.paymentHistory}`, icon: faClockRotateLeft, title: 'Lịch sử thanh toán' },
+    { to: `${config.routes.dashBoard}`, icon: faClipboardList, title: 'Bảng điều hướng' },
+    { to: `${config.routes.postManagement}`, icon: faClipboardList, title: 'Quản lý bài đăng' },
+    { to: `${config.routes.typePostManagement}`, icon: faClipboardList, title: 'Quản lý loại bài đăng' },
     { to: `${config.routes.contact}`, icon: faComment, title: 'Liên hệ' },
     { to: `${config.routes.logout}`, icon: faArrowRightToBracket, title: 'Thoát' },
 ];

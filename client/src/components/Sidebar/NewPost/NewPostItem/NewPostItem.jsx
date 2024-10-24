@@ -5,7 +5,7 @@ import moment from 'moment';
 import 'moment/locale/vi';
 
 function NewPostItem({ data }) {
-    const img = JSON.parse(data?.images.image);
+    const img = JSON.parse(data?.image);
 
     const renderStars = (num) => {
         return Array(num)

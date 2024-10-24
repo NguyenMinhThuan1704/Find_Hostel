@@ -89,7 +89,7 @@ function Header() {
 
     return (
         <div className={cx('hidden', 'sm:flex', 'justify-between', 'h-[70px]', 'px-[100px]')}>
-            <Link>
+            <Link to={config.routes.home}>
                 <Image className="w-[240px] h-full" src={img.header.logo_phongtro}></Image>
             </Link>
             <div className="flex items-center">

@@ -1,1 +1,1 @@
-export { default } from './PostManagement';
+export { default } from './PostManage';

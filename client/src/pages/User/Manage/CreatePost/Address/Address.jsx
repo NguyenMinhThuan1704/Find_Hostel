@@ -15,31 +15,32 @@ function Address({ setPayload }) {
     const [reset, setReset] = useState(false);
 
     useEffect(() => {
-        if (dataEdit) {
+        if (dataEdit && provinces.length > 0) {
             let addressArr = dataEdit?.address?.split(',');
-            let foundProvince =
-                provinces.length > 0 &&
-                provinces?.find((item) => item.name === addressArr[addressArr.length - 1]?.trim());
-            setProvince(foundProvince ? foundProvince.id : '');
+            if (addressArr && addressArr.length > 0) {
+                let foundProvince = provinces?.find((item) => item.name === addressArr[addressArr.length - 1]?.trim());
+                setProvince(foundProvince ? foundProvince.id : '');
+            }
         }
     }, [provinces, dataEdit]);
 
     useEffect(() => {
-        if (dataEdit) {
+        if (dataEdit && districts.length > 0) {
             let addressArr = dataEdit?.address?.split(',');
-            let foundProvince =
-                districts.length > 0 &&
-                districts?.find((item) => item.name === addressArr[addressArr.length - 2]?.trim());
-            setDistrict(foundProvince ? foundProvince.id : '');
+            if (addressArr && addressArr.length > 1) {
+                let foundDistrict = districts?.find((item) => item.name === addressArr[addressArr.length - 2]?.trim());
+                setDistrict(foundDistrict ? foundDistrict.id : '');
+            }
         }
     }, [districts, dataEdit]);
 
     useEffect(() => {
-        if (dataEdit) {
+        if (dataEdit && wards.length > 0) {
             let addressArr = dataEdit?.address?.split(',');
-            let foundProvince =
-                wards.length > 0 && wards?.find((item) => item.name === addressArr[addressArr.length - 3]?.trim());
-            setWard(foundProvince ? foundProvince.id : '');
+            if (addressArr && addressArr.length > 2) {
+                let foundWard = wards?.find((item) => item.name === addressArr[addressArr.length - 3]?.trim());
+                setWard(foundWard ? foundWard.id : '');
+            }
         }
     }, [wards, dataEdit]);
 
