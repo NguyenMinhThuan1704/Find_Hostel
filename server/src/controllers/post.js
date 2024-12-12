@@ -67,6 +67,31 @@ export const createNewPost = async (req, res) => {
   }
 };
 
+export const getPostsLimitUser = async (req, res) => {
+  const { page, ...query } = req.query;
+  const id = req.user.id;
+
+  try {
+    if (!id)
+      return res.status(400).json({
+        err: 1,
+        msg: "Missing user ID",
+      });
+    const response = await PostService.getPostsLimitUserService(
+      page,
+      query,
+      id
+    );
+
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json({
+      err: -1,
+      msg: "Failed at post1 controller: " + error,
+    });
+  }
+};
+
 export const getPostsLimitAdmin = async (req, res) => {
   const { page, ...query } = req.query;
   const id = req.user.id;
@@ -77,11 +102,7 @@ export const getPostsLimitAdmin = async (req, res) => {
         err: 1,
         msg: "Missing user ID",
       });
-    const response = await PostService.getPostsLimitAdminService(
-      page,
-      query,
-      id
-    );
+    const response = await PostService.getPostsLimitAdminService(page, query);
 
     return res.status(200).json(response);
   } catch (error) {

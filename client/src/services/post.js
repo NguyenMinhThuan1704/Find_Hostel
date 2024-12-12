@@ -73,6 +73,21 @@ export const apiCreatePost = (payload) =>
         }
     });
 
+export const apiGetPostLimitUser = (query) =>
+    new Promise(async (resolve, reject) => {
+        try {
+            const response = await axiosConfig({
+                method: 'get',
+                url: `/api/v1/post/post-user`,
+                paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'repeat' }),
+                params: query,
+            });
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });
+
 export const apiGetPostLimitAdmin = (query) =>
     new Promise(async (resolve, reject) => {
         try {

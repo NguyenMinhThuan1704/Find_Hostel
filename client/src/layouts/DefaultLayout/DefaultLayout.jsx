@@ -14,12 +14,12 @@ import { useSelector } from 'react-redux';
 const cx = classNames.bind(styles);
 
 function DefaultLayout({ children }) {
-    const { isLoggedIn } = useSelector((state) => state.auth);
+    // const { isLoggedIn } = useSelector((state) => state.auth);
     return (
         <div className={cx('wrapper', 'bg-[#f5f5f5]')}>
             <Header />
             <Navbar />
-            {isLoggedIn && <Search />}
+            <Search />
             <div className={cx('containers')}>
                 <div className={cx('content', 'sm:mx-[100px]')}>{children}</div>
             </div>

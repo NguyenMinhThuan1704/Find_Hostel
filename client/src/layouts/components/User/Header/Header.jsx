@@ -51,28 +51,28 @@ function Header() {
         {
             icon: <FontAwesomeIcon icon={faPencil} />,
             title: 'Đăng tin cho thuê',
-            to: `${config.routes.profile}`,
+            to: `${config.routes.createPost}`,
         },
         {
             icon: <FontAwesomeIcon icon={faClipboardList} />,
             title: 'Quản lý đăng tin',
-            to: `${config.routes.profile}`,
+            to: `${config.routes.postManage}`,
         },
-        {
-            icon: <FontAwesomeIcon icon={faCreditCard} />,
-            title: 'Nạp tiền',
-            to: `${config.routes.profile}`,
-        },
+        // {
+        //     icon: <FontAwesomeIcon icon={faCreditCard} />,
+        //     title: 'Nạp tiền',
+        //     to: `${config.routes.recharge}`,
+        // },
         {
             icon: <FontAwesomeIcon icon={faCommentDollar} />,
             title: 'Lịch sử nạp tiền',
-            to: `${config.routes.profile}`,
+            to: `${config.routes.rechargeHistory}`,
         },
-        {
-            icon: <FontAwesomeIcon icon={faHeart} />,
-            title: 'Tin đã lưu',
-            to: `${config.routes.profile}`,
-        },
+        // {
+        //     icon: <FontAwesomeIcon icon={faHeart} />,
+        //     title: 'Tin đã lưu',
+        //     to: `${config.routes.profile}`,
+        // },
         {
             icon: <FontAwesomeIcon icon={faGear} />,
             title: 'Cài đặt',
@@ -93,10 +93,10 @@ function Header() {
                 <Image className="w-[240px] h-full" src={img.header.logo_phongtro}></Image>
             </Link>
             <div className="flex items-center">
-                <Link to={config.routes.rentalRoom} className="flex justify-center items-center p-4 hover:underline">
+                {/* <Link to={config.routes.rentalRoom} className="flex justify-center items-center p-4 hover:underline">
                     <FontAwesomeIcon icon={faHeart} />
                     <p className="ml-2">Yêu thích</p>
-                </Link>
+                </Link> */}
                 {isLoggedIn ? (
                     <>
                         <Menu items={userMenu}>

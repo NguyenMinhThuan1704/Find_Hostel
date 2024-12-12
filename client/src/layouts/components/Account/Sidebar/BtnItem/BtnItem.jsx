@@ -14,7 +14,7 @@ function BtnItem({ icon, title, isActive, onClick, to }) {
             })}
             onClick={onClick}
         >
-            <p className="text-[#b3b9c6] text-left text-[16px]">
+            <p className="text-[#b3b9c6] text-left text-[16px] line-clamp-1" title={title}>
                 <FontAwesomeIcon className="mr-4" icon={icon} />
                 {title}
             </p>

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 function Information({ payload, setPayload }) {
     const { categories } = useSelector((state) => state.app);
     const { currentData } = useSelector((state) => state.user);
+    console.log(categories);
 
     const handleChange = (e) => {
         setPayload({

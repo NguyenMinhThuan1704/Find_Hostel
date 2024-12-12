@@ -3,9 +3,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/vi';
+import { formatVietnameseToString } from 'utils/Common/formatVietnameseToString';
 
 function NewPostItem({ data }) {
     const img = JSON.parse(data?.image);
+    console.log(data);
 
     const renderStars = (num) => {
         return Array(num)
@@ -22,7 +24,10 @@ function NewPostItem({ data }) {
     };
 
     return (
-        <Link to="#" className="flex items-start space-x-3 group pb-4 border-b border-[#eee]">
+        <Link
+            to={`/chi-tiet/${formatVietnameseToString(data.title?.replaceAll('/', ''))}/${data.id}`}
+            className="flex items-start space-x-3 group pb-4 border-b border-[#eee]"
+        >
             <Image src={img[0]} alt={data.title} className="w-[60px] h-[60px] object-cover rounded-md" />
 
             <div className="flex-1">

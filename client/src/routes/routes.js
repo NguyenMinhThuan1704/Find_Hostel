@@ -25,6 +25,12 @@ import Recharge from 'pages/User/Manage/Recharge';
 import DashBoard from 'pages/Admin/DashBoard';
 import PostManagement from 'pages/Admin/PostManagement';
 import TypePost from 'pages/Admin/TypePost';
+import PackageService from 'pages/Admin/PackageService';
+import Price from 'pages/Admin/Price';
+import Area from 'pages/Admin/Area';
+import Province from 'pages/Admin/Province';
+import ContactAd from 'pages/Admin/Contact';
+
 // Public routes
 const publicRoutes = [
     { path: config.routes.home, component: Home },
@@ -57,6 +63,11 @@ const publicRoutes = [
     { path: config.routes.dashBoard, component: DashBoard, layout: AdminLayout },
     { path: config.routes.postManagement, component: PostManagement, layout: AdminLayout },
     { path: config.routes.typePostManagement, component: TypePost, layout: AdminLayout },
+    { path: config.routes.packageService, component: PackageService, layout: AdminLayout },
+    { path: config.routes.price, component: Price, layout: AdminLayout },
+    { path: config.routes.area, component: Area, layout: AdminLayout },
+    { path: config.routes.province, component: Province, layout: AdminLayout },
+    { path: config.routes.contactAdmin, component: ContactAd, layout: AdminLayout },
 ];
 
 const privateRoutes = [];

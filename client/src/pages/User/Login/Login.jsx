@@ -17,7 +17,7 @@ const validationSchema = Yup.object({
 function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { msg, update, isSuccess } = useSelector((state) => state.auth);
+    const { msg, update, isSuccess, role } = useSelector((state) => state.auth);
 
     const handleSubmit = async (values, { setSubmitting }) => {
         const payload = {
@@ -33,15 +33,22 @@ function Login() {
     useEffect(() => {
         if (msg) {
             if (isSuccess === true) {
-                toast.success('Đăng nhập thành công');
-                setTimeout(() => {
-                    navigate(config.routes.home);
-                }, 2000);
+                if (role === 1 || role === 2) {
+                    toast.success('Đăng nhập thành công');
+                    setTimeout(() => {
+                        navigate(config.routes.home);
+                    }, 2000);
+                } else if (role === 3) {
+                    toast.success('Đăng nhập thành công vào hệ thống quản trị');
+                    setTimeout(() => {
+                        navigate(config.routes.typePostManagement);
+                    }, 2000);
+                }
             } else {
                 toast.error(`Đăng nhập thất bại: ${msg}`);
             }
         }
-    }, [msg, update, isSuccess, navigate]);
+    }, [msg, update, isSuccess, role, navigate]);
 
     return (
         <div className="flex justify-center items-center bg-gray-100 p-[30px] ">

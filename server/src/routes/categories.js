@@ -9,5 +9,6 @@ router.use(verifyToken);
 router.get("/cate-admin", controllers.getCategoriesLimitAdmin);
 router.post("/create-cate", controllers.createCategories);
 router.put("/update-cate", controllers.updateCategories);
+router.delete("/delete-cate", controllers.deleteCategories);
 
 export default router;

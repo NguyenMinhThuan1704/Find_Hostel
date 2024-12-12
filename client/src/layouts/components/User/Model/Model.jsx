@@ -43,13 +43,14 @@ function Model({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
     };
     const convert100toTarget = (percent) => {
         return name === 'price'
-            ? (Math.ceil(Math.round(percent * 1.5) / 5) * 5) / 10
+            ? // thay
+              (Math.ceil(Math.round(percent * 2) / 5) * 5) / 10
             : name === 'area'
               ? Math.ceil(Math.round(percent * 0.9) / 5) * 5
               : 0;
     };
     const convertTo100 = (percent) => {
-        let target = name === 'price' ? 15 : name === 'area' ? 90 : 1;
+        let target = name === 'price' ? 20 : name === 'area' ? 90 : 1;
         return Math.floor((percent / target) * 100);
     };
     const handleActive = (code, value) => {
@@ -64,7 +65,8 @@ function Model({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
                 setPresent1(0);
                 setPresent2(convertTo100(20));
             }
-            if (arrMaxMin[0] === 15 || arrMaxMin[0] === 90) {
+            // thay
+            if (arrMaxMin[0] === 20 || arrMaxMin[0] === 90) {
                 setPresent1(100);
                 setPresent2(100);
             }
@@ -246,7 +248,7 @@ function Model({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
                                         handleClickTrack(e, 100);
                                     }}
                                 >
-                                    {name === 'price' ? '15 triệu +' : name === 'area' ? 'Trên 90 m2' : ''}
+                                    {name === 'price' ? '20 triệu +' : name === 'area' ? 'Trên 90 m2' : ''}
                                 </span>
                             </div>
                         </div>

@@ -57,3 +57,17 @@ export const apiUpdateCategories = (payload) =>
             reject(error);
         }
     });
+
+export const apiDeleteCategories = (id) =>
+    new Promise(async (resolve, reject) => {
+        try {
+            const response = await axiosConfig({
+                method: 'delete',
+                url: `/api/v1/categories/delete-cate`,
+                params: { id },
+            });
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });

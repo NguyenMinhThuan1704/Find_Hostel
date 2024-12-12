@@ -6,6 +6,7 @@ const initState = {
     msg: '',
     update: false,
     isSuccess: null,
+    role: null,
 };
 const authReducer = (state = initState, action) => {
     switch (action.type) {
@@ -17,6 +18,7 @@ const authReducer = (state = initState, action) => {
                 token: action.data,
                 msg: 'Đăng nhập thành công',
                 isSuccess: true,
+                role: action.role,
             };
         case actionTypes.REGISTER_FAIL:
         case actionTypes.LOGIN_FAIL:

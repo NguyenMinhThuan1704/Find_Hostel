@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast, ToastContainer } from 'react-toastify';
 import Pagination from 'components/Pagination';
 import CUTypePost from './CUTypePost';
-import { apiCreateCategory, apiGetCategoriesLimitAdmin, apiUpdateCategories } from 'services';
+import { apiCreateCategory, apiDeleteCategories, apiGetCategoriesLimitAdmin, apiUpdateCategories } from 'services';
 
 function TypePost() {
     const navigate = useNavigate();
@@ -30,7 +30,6 @@ function TypePost() {
         }
     };
 
-    // Gọi lại API khi page thay đổi
     useEffect(() => {
         fetchData({ page });
     }, [page]);
@@ -91,13 +90,46 @@ function TypePost() {
         }
     };
 
+    const handleDelete = async (id) => {
+        if (!window.confirm('Bạn có chắc chắn muốn xóa loại bài đăng này không?')) return;
+
+        try {
+            const response = await apiDeleteCategories(id);
+            if (response?.data?.err === 0) {
+                toast.success('Xóa loại bài đăng thành công!', {
+                    position: 'top-right',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
+                });
+                fetchData({ page: 1 });
+            } else {
+                toast.error('Xóa loại bài đăng thất bại!', {
+                    position: 'top-right',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
+                });
+            }
+        } catch (error) {
+            console.error('Error deleting cate:', error);
+            toast.error('Có lỗi xảy ra khi xóa loại bài đăng!');
+        }
+    };
+
     const handleSearchChange = (e) => {
         setSearchParams((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
     const handleSearch = () => {
         const query = {
-            page: 1, // Reset lại trang khi tìm kiếm
+            page: 1,
             ...(searchParams.searchString && { searchString: searchParams.searchString }),
         };
 
@@ -106,7 +138,6 @@ function TypePost() {
         fetchData(query);
     };
 
-    // Xử lý khi thay đổi page
     const handlePageChange = (newPage) => {
         setSearchParams1({ page: newPage });
     };
@@ -114,7 +145,7 @@ function TypePost() {
     return (
         <div>
             <div className="flex flex-col lg:flex-row sm:w-auto lg:justify-between lg:items-center mb-4 border-b border-b-slate-400 p-4">
-                <h1 className="my-0">Quản lý loại tin đăng</h1>
+                <h1 className="my-0">Quản lý loại bài đăng</h1>
 
                 <div className="flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
                     <input
@@ -136,7 +167,7 @@ function TypePost() {
                         className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700"
                         onClick={handleShow}
                     >
-                        Thêm loại tin
+                        Thêm loại bài đăng
                     </button>
                 </div>
             </div>
@@ -189,7 +220,7 @@ function TypePost() {
                                             <button className="mr-4" onClick={() => handleEdit(item)}>
                                                 <FontAwesomeIcon icon={faEdit} title="Sửa" />
                                             </button>
-                                            <button>
+                                            <button onClick={() => handleDelete(item.id)}>
                                                 <FontAwesomeIcon icon={faTrash} title="Xóa" />
                                             </button>
                                         </td>

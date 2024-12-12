@@ -216,12 +216,58 @@ export const createNewPostService = (body, userId) =>
     }
   });
 
-export const getPostsLimitAdminService = (page, query, id) =>
+export const getPostsLimitUserService = (page, query, id) =>
   new Promise(async (resolve, reject) => {
     try {
       let offset = !page || +page <= 1 ? 0 : +page - 1;
 
       const whereConditions = { userId: id };
+
+      if (query.searchString) {
+        whereConditions.title = {
+          [Op.like]: `%${query.searchString}%`,
+        };
+      }
+
+      const response = await db.Post.findAndCountAll({
+        where: whereConditions,
+        raw: true,
+        nest: true,
+        offset: offset * 5 || 0,
+        limit: 5,
+        order: [["createdAt", "DESC"]],
+        include: [
+          { model: db.Image, as: "images", attributes: ["image"] },
+          {
+            model: db.PostPackage,
+            as: "postPackages",
+            attributes: ["id", "packageId", "startDay", "endDay", "status"],
+            where: {
+              ...(query.packageId ? { packageId: query.packageId } : {}),
+              ...(query.status ? { status: query.status === "true" } : {}),
+            },
+          },
+          { model: db.User, as: "user", attributes: ["name", "zalo", "phone"] },
+        ],
+      });
+
+      resolve({
+        err: response ? 0 : 1,
+        msg: response ? "OK" : "Getting posts is failed.",
+        response,
+      });
+    } catch (error) {
+      console.error("Error in getPostLimitAdminService:", error);
+      reject(error);
+    }
+  });
+
+export const getPostsLimitAdminService = (page, query) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      let offset = !page || +page <= 1 ? 0 : +page - 1;
+
+      const whereConditions = {};
 
       if (query.searchString) {
         whereConditions.title = {

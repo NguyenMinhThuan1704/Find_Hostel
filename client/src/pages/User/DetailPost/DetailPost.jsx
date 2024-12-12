@@ -54,7 +54,8 @@ function DetailPost() {
                     <Link to={config.routes.home} className="text-blue-600 underline w-[10%]">
                         Trang chủ
                     </Link>{' '}
-                    <FontAwesomeIcon icon={faAngleRight} /> <p className="line-clamp-1">{posts[0]?.title}</p>
+                    <FontAwesomeIcon icon={faAngleRight} />{' '}
+                    <p className="line-clamp-1 max-w-[600px]">{posts[0]?.title}</p>
                 </div>
                 <div className="flex">
                     <SlideSwiper img={imagesArray} />
@@ -162,11 +163,23 @@ function DetailPost() {
                         </div>
                         <button className="flex px-8 py-4 gap-4 text-[22px] text-white bg-[#16c784] w-full rounded-xl items-center justify-center hover:bg-[#13bb7b]">
                             <FontAwesomeIcon icon={faPhone} />
-                            <p className="font-bold">{posts[0]?.user.phone}</p>
+                            <a href={`tel:${posts[0]?.user.phone || '0123456789'}`} className="font-bold text-white">
+                                {posts[0]?.user.phone}
+                            </a>
                         </button>
                         <button className="flex px-8 py-4 gap-4 text-[18px] text-black border border-solid bg-white w-full rounded-xl items-center justify-center hover:underline">
                             <FontAwesomeIcon icon={faFacebook} />
-                            <p className="font-bold">Nhắn zalo</p>
+                            {posts[0]?.user.phone ? (
+                                <a
+                                    href={`https://zalo.me/${posts[0]?.user.phone}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Mở Zalo
+                                </a>
+                            ) : (
+                                <span>Không có số điện thoại</span>
+                            )}
                         </button>
                         <button className="flex px-8 py-4 gap-4 text-[18px] text-black border border-solid bg-white w-full rounded-xl items-center justify-center hover:underline">
                             <FontAwesomeIcon icon={faHeart} />

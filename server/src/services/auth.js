@@ -51,6 +51,7 @@ export const loginService = (body) =>
         where: { phone: body.phone },
         raw: true,
       });
+
       const isCurrentPassword =
         response && bcrypt.compareSync(body.password, response.password);
       const token =
@@ -62,6 +63,7 @@ export const loginService = (body) =>
         );
       resolve({
         err: token ? 0 : 2,
+        type: response.roleId,
         msg: token
           ? "Login is successfully!"
           : response

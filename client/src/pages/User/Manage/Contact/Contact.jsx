@@ -36,7 +36,9 @@ function Contact() {
     return (
         <div>
             <ToastContainer />
-            <h1 className="my-0 border-b border-b-slate-400">Liên hệ</h1>
+            <div className="flex flex-col lg:flex-row sm:w-auto lg:justify-between lg:items-center mb-4 border-b border-b-slate-400 p-4">
+                <h1 className="my-0 ">Liên hệ</h1>
+            </div>
             <div className="p-8 mt-8 bg-white shadow-md rounded-md flex flex-col lg:flex-row gap-8">
                 <div className="flex-1 p-6 bg-gradient-to-r from-blue-400 to-blue-500 text-white rounded-lg">
                     <h2 className="font-semibold text-3xl mb-4">Thông tin liên hệ</h2>

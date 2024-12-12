@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
-function Sidebar({ isOpen, onClose, menuItems }) {
+function Sidebar({ isOpen, onClose, menuItems, isAdmin }) {
     const dispatch = useDispatch();
     const location = useLocation();
     const navigate = useNavigate();
@@ -36,7 +36,7 @@ function Sidebar({ isOpen, onClose, menuItems }) {
         <div
             className={`fixed top-0 left-0 h-full bg-gray-800 text-white p-4 transform transition-transform duration-300 z-30 ${
                 isOpen ? 'translate-x-0' : '-translate-x-full'
-            } md:translate-x-0 w-[240px] flex flex-col justify-between`}
+            } md:translate-x-0 w-[240px] flex flex-col justify-between overflow-y-auto`}
         >
             <div>
                 <div className="space-y-4 pb-4 border-b border-[#434a60]">
@@ -99,16 +99,18 @@ function Sidebar({ isOpen, onClose, menuItems }) {
             </div>
 
             <div>
-                <div className="flex justify-between mb-4">
-                    <Link>
-                        <button className="p-4 rounded-lg bg-yellow-400 hover:bg-yellow-600 text-black">
-                            Nạp tiền
-                        </button>
-                    </Link>
-                    <Link>
-                        <button className="p-4 rounded-lg bg-red-700 hover:bg-red-900 text-white">Đăng tin</button>
-                    </Link>
-                </div>
+                {!isAdmin && (
+                    <div className="flex justify-between mb-4">
+                        <Link>
+                            <button className="p-4 rounded-lg bg-yellow-400 hover:bg-yellow-600 text-black">
+                                Nạp tiền
+                            </button>
+                        </Link>
+                        <Link>
+                            <button className="p-4 rounded-lg bg-red-700 hover:bg-red-900 text-white">Đăng tin</button>
+                        </Link>
+                    </div>
+                )}
                 <div className="flex items-center mb-4">
                     <div className="mr-4">
                         <Image className="rounded-full w-[50px] h-[50px]" src={currentData.avatar || 'dsadassa'} />

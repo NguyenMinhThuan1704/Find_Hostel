@@ -36,6 +36,7 @@ export const login = (payload) => async (dispatch) => {
             dispatch({
                 type: actionTypes.LOGIN_SUCCESS,
                 data: response.data.token,
+                role: response.data.type,
             });
             return true;
         } else {

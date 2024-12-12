@@ -130,9 +130,11 @@ function CreatePost({ isEdit }) {
     };
 
     return (
-        <div className="bg-white p-4">
+        <div className="bg-white ">
             <ToastContainer />
-            <h1 className="my-0 border-b border-b-slate-400 mb-6">{isEdit ? 'Chỉnh sửa tin đăng' : 'Đăng tin mới'}</h1>
+            <div className="flex flex-col lg:flex-row sm:w-auto lg:justify-between lg:items-center mb-4 border-b border-b-slate-400 p-4">
+                <h1 className="my-0 ">{isEdit ? 'Chỉnh sửa tin đăng' : 'Đăng tin mới'}</h1>
+            </div>
             {isEdit ? (
                 <></>
             ) : (
@@ -142,7 +144,7 @@ function CreatePost({ isEdit }) {
                     sẽ không được duyệt.
                 </div>
             )}
-            <div className="flex gap-8">
+            <div className="flex gap-8 p-4">
                 <div className="flex flex-col gap-8 w-[70%]">
                     <Address setPayload={setPayload} />
                     <Information payload={payload} setPayload={setPayload} />

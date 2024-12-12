@@ -4,7 +4,7 @@ import Button from 'components/Button';
 import config from 'config';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from 'store/actions';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import Image from 'components/Image';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -25,9 +25,13 @@ function PostManagement() {
         page: 1,
     });
 
+    const [searchPage] = useSearchParams();
+
+    const page = parseInt(searchPage.get('page')) || 1;
+
     useEffect(() => {
-        dispatch(actions.getPostsLimitAdmin());
-    }, [dataEdit]);
+        dispatch(actions.getPostsLimitUser({ page } || searchParams));
+    }, [dataEdit, page]);
 
     useEffect(() => {
         if (!dataEdit) {
@@ -46,7 +50,7 @@ function PostManagement() {
             const response = await apiDeletePost(postId);
             if (response?.data?.err === 0) {
                 toast.success('Xóa bài đăng thành công!');
-                dispatch(actions.getPostsLimitAdmin());
+                dispatch(actions.getPostsLimitUser());
             } else {
                 toast.error('Xóa bài đăng thất bại!');
             }
@@ -70,13 +74,13 @@ function PostManagement() {
 
         const queryString = new URLSearchParams(query).toString();
         navigate(`/he-thong/tin-dang?${queryString}`);
-        dispatch(actions.getPostsLimitAdmin(query));
+        dispatch(actions.getPostsLimitUser(query));
     };
 
     return (
         <div>
             <ToastContainer />
-            <div className="flex flex-col lg:flex-row sm:w-auto lg:justify-between lg:items-center mb-4 border-b border-b-slate-400">
+            <div className="flex flex-col lg:flex-row sm:w-auto lg:justify-between lg:items-center mb-4 border-b border-b-slate-400 p-4">
                 <h1 className="my-0">Quản lý tin đăng</h1>
 
                 <div className="flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
@@ -88,7 +92,7 @@ function PostManagement() {
                         value={searchParams.searchString}
                         onChange={handleSearchChange}
                     />
-                    <select
+                    {/* <select
                         name="packageId"
                         className="border border-gray-300 rounded-md px-4 py-2 w-full sm:w-auto"
                         value={searchParams.packageId}
@@ -100,7 +104,7 @@ function PostManagement() {
                                 {text}
                             </option>
                         ))}
-                    </select>
+                    </select> */}
                     <select
                         name="status"
                         className="border border-gray-300 rounded-md px-4 py-2 w-full sm:w-auto"

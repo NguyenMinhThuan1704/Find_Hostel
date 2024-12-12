@@ -19,7 +19,7 @@ import config from 'config';
 const menuItems = [
     { to: `${config.routes.postManage}`, icon: faClipboardList, title: 'Quản lý bài đăng' },
     { to: `${config.routes.profile}`, icon: faUser, title: 'Thông tin cá nhân' },
-    { to: `${config.routes.profile}`, icon: faCreditCard, title: 'Nạp tiền' },
+    // { to: `${config.routes.profile}`, icon: faCreditCard, title: 'Nạp tiền' },
     { to: `${config.routes.rechargeHistory}`, icon: faCommentDollar, title: 'Lịch sử nạp tiền' },
     { to: `${config.routes.paymentHistory}`, icon: faClockRotateLeft, title: 'Lịch sử thanh toán' },
     { to: `${config.routes.contact}`, icon: faComment, title: 'Liên hệ' },

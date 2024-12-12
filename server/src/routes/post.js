@@ -9,6 +9,7 @@ router.get("/limit", postController.getPostsLimit);
 router.get("/new-post", postController.getNewPost);
 
 router.use(verifyToken);
+router.get("/post-user", postController.getPostsLimitUser);
 router.get("/post-admin", postController.getPostsLimitAdmin);
 router.post("/create-post", postController.createNewPost);
 router.put("/update-post", postController.updatePost);

@@ -5,18 +5,35 @@ import Sidebar from 'layouts/components/Account/Sidebar';
 import Support from 'layouts/components/User/Support';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { faArrowRightToBracket, faClipboardList, faComment } from '@fortawesome/free-solid-svg-icons';
+import {
+    faArrowRightToBracket,
+    faArrowsUpDownLeftRight,
+    faClipboardList,
+    faComment,
+    faCube,
+    faList,
+    faLocationDot,
+    faMoneyCheckDollar,
+    faPalette,
+    faUser,
+} from '@fortawesome/free-solid-svg-icons';
 import config from 'config';
 
 const menuItems = [
-    { to: `${config.routes.dashBoard}`, icon: faClipboardList, title: 'Bảng điều hướng' },
+    // { to: `${config.routes.dashBoard}`, icon: faPalette, title: 'Bảng điều hướng' },
+    { to: `${config.routes.typePostManagement}`, icon: faList, title: 'Quản lý loại bài đăng' },
+    { to: `${config.routes.packageService}`, icon: faCube, title: 'Quản lý gói bài đăng' },
     { to: `${config.routes.postManagement}`, icon: faClipboardList, title: 'Quản lý bài đăng' },
-    { to: `${config.routes.typePostManagement}`, icon: faClipboardList, title: 'Quản lý loại bài đăng' },
-    { to: `${config.routes.contact}`, icon: faComment, title: 'Liên hệ' },
+    { to: `${config.routes.price}`, icon: faMoneyCheckDollar, title: 'Quản lý giá' },
+    { to: `${config.routes.area}`, icon: faArrowsUpDownLeftRight, title: 'Quản lý diện tích' },
+    { to: `${config.routes.province}`, icon: faLocationDot, title: 'Quản lý tỉnh thành' },
+    { to: `${config.routes.province}`, icon: faUser, title: 'Quản lý tài khoản' },
+    // { to: `${config.routes.contactAdmin}`, icon: faComment, title: 'Quản lý liên hệ' },
     { to: `${config.routes.logout}`, icon: faArrowRightToBracket, title: 'Thoát' },
 ];
 
 function AccountLayout({ children }) {
+    const isAdmin = true;
     const { isLoggedIn } = useSelector((state) => state.auth);
     const [isSidebarOpen, setSidebarOpen] = useState(false);
 
@@ -28,7 +45,7 @@ function AccountLayout({ children }) {
 
     return (
         <div className="flex h-screen overflow-hidden">
-            <Sidebar menuItems={menuItems} isOpen={isSidebarOpen} onClose={handleSidebarToggle} />
+            <Sidebar isAdmin={isAdmin} menuItems={menuItems} isOpen={isSidebarOpen} onClose={handleSidebarToggle} />
             {isSidebarOpen && (
                 <div className="fixed inset-0 bg-black opacity-50 z-20 md:hidden" onClick={handleSidebarToggle} />
             )}

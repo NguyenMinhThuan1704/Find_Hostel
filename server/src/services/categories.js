@@ -94,3 +94,19 @@ export const updateCategoriesService = ({ id, ...body }) =>
       reject(error);
     }
   });
+
+export const deleteCategoriesService = (id) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const response = await db.Category.destroy({
+        where: { id: id },
+      });
+      resolve({
+        err: response > 0 ? 0 : 1,
+        msg: response > 0 ? "Deleted" : "No cate deleted successfully",
+      });
+    } catch (error) {
+      console.error("Error in deleteCategoriesService:", error);
+      reject(error);
+    }
+  });

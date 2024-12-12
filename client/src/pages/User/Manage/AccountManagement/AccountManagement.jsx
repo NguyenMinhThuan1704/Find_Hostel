@@ -67,7 +67,9 @@ function AccountManagement() {
     return (
         <div>
             <ToastContainer />
-            <h1 className="my-0 border-b border-b-slate-400">Quản lý tài khoản</h1>
+            <div className="flex flex-col lg:flex-row sm:w-auto lg:justify-between lg:items-center mb-4 border-b border-b-slate-400 p-4">
+                <h1 className="my-0 ">Quản lý tài khoản</h1>
+            </div>
             <div className="p-8 mt-8 bg-white shadow-md rounded-md">
                 <div className="mb-4">
                     <label className="block text-3xl font-medium text-gray-700">Mã thành viên</label>

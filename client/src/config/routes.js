@@ -26,6 +26,11 @@ const routes = {
     dashBoard: '/quan-tri/bang-dieu-huong',
     postManagement: '/quan-tri/quan-ly-tin-dang',
     typePostManagement: '/quan-tri/quan-ly-loai-tin-dang',
+    packageService: '/quan-tri/quan-ly-goi-tin-dang',
+    price: '/quan-tri/quan-ly-gia',
+    area: '/quan-tri/quan-ly-dien-tich',
+    province: '/quan-tri/quan-ly-tinh-thanh',
+    contactAdmin: '/quan-tri/quan-ly-lien-he',
 };
 
 export default routes;

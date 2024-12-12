@@ -16,7 +16,9 @@ function RechargeHistory() {
     ]);
     return (
         <div>
-            <h1 className="my-0 border-b border-b-slate-400">Lịch sử nạp tiền</h1>
+            <div className="flex flex-col lg:flex-row sm:w-auto lg:justify-between lg:items-center mb-4 border-b border-b-slate-400 p-4">
+                <h1 className="my-0">Lịch sử nạp tiền</h1>
+            </div>
             <div className="p-8 mt-8 bg-white shadow-md rounded-md">
                 <Table data={data} />
             </div>

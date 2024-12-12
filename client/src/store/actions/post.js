@@ -1,4 +1,4 @@
-import { apiGetNewPosts, apiGetPost, apiGetPostLimit, apiGetPostLimitAdmin } from 'services/post';
+import { apiGetNewPosts, apiGetPost, apiGetPostLimit, apiGetPostLimitAdmin, apiGetPostLimitUser } from 'services/post';
 import actionTypes from './actionTypes';
 
 export const getPosts = () => async (dispatch) => {
@@ -71,6 +71,31 @@ export const getNewPosts =
             });
         }
     };
+
+export const getPostsLimitUser = (query) => async (dispatch) => {
+    try {
+        const response = await apiGetPostLimitUser(query);
+
+        if (response?.data.err === 0) {
+            dispatch({
+                type: actionTypes.GET_POSTS_USER,
+                posts: response.data.response?.rows,
+                count: response.data.response?.count,
+            });
+        } else {
+            dispatch({
+                type: actionTypes.GET_POSTS_USER,
+                msg: response.data.msg,
+                posts: null,
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: actionTypes.GET_POSTS_USER,
+            posts: null,
+        });
+    }
+};
 
 export const getPostsLimitAdmin = (query) => async (dispatch) => {
     try {

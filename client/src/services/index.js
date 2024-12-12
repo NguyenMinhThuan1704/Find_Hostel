@@ -3,3 +3,7 @@ export * from './categories';
 export * from './auth';
 export * from './post';
 export * from './user';
+export * from './package';
+export * from './price';
+export * from './area';
+export * from './province';
