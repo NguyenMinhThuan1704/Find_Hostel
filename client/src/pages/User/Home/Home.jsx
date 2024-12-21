@@ -40,11 +40,11 @@ function Home() {
             <Area />
 
             <div className="w-full flex gap-4">
-                <div className="w-2/3">
+                <div className="w-full md:w-2/3">
                     <ListPost page={page} />
                     <Pagination page={1} />
                 </div>
-                <div className="w-1/3">
+                <div className=" md:w-1/3">
                     <Sidebar />
                 </div>
             </div>

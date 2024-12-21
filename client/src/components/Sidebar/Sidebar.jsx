@@ -20,7 +20,7 @@ function Sidebar() {
     }, []);
 
     return (
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 hidden md:block ">
             <SidebarTwoRow data={prices} type="priceCode" title="Xem theo giá" />
             <SidebarTwoRow data={areas} type="areaCode" title="Xem theo diện tích" />
             <SidebarOneRow data={categories} title="Danh mục cho thuê" />

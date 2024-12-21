@@ -97,6 +97,7 @@ function CreatePost({ isEdit }) {
 
             if (response?.data.err === 0) {
                 resetPayload();
+                toast.success('Cập nhật bài đăng thành công.');
                 dispatch(resetData());
             }
         } else {

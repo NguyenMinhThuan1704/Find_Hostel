@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { apiDeletePost } from 'services';
 import { toast, ToastContainer } from 'react-toastify';
 import Pagination from 'components/Pagination';
+import UpdatePost from 'pages/User/Manage/PostManagement/UpdatePost';
 
 function PostManagement() {
     const dispatch = useDispatch();
@@ -175,7 +176,13 @@ function PostManagement() {
                                             {checkStatus(item.postPackages.endDay)}
                                         </td>
                                         <td className="border border-gray-300">
-                                            <button className="mr-4">
+                                            <button
+                                                className="mr-4"
+                                                onClick={() => {
+                                                    dispatch(actions.editData(item));
+                                                    setIsEdit(true);
+                                                }}
+                                            >
                                                 <FontAwesomeIcon icon={faEdit} title="Sửa" />
                                             </button>
                                             <button>
@@ -190,6 +197,7 @@ function PostManagement() {
                 </div>
                 <Pagination page={searchParams.page} />
             </div>
+            {isEdit && <UpdatePost setIsEdit={setIsEdit} />}
         </div>
     );
 }

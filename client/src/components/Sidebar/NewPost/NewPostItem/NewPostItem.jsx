@@ -7,7 +7,6 @@ import { formatVietnameseToString } from 'utils/Common/formatVietnameseToString'
 
 function NewPostItem({ data }) {
     const img = JSON.parse(data?.image);
-    console.log(data);
 
     const renderStars = (num) => {
         return Array(num)
